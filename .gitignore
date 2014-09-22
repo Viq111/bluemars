@@ -4,6 +4,15 @@ bluemars.sln
 bluemars.v12.suo
 bluemars.vcxproj*
 
+# CMake stuff
+cmake_install.cmake
+CMakeFiles/
+CMakeCache.txt
+Makefile
+
+# Executable from compilation on Linux
+BlueMars
+
 # Build dir
 Debug
 Release
