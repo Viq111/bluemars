@@ -1,0 +1,9 @@
+# Visual Studio things
+bluemars.sdf
+bluemars.sln
+bluemars.v12.suo
+bluemars.vcxproj*
+
+# Build dir
+Debug
+Release
