@@ -1,4 +1,4 @@
-bluemars
+BlueMars - A modular procedural terrain generator
 ========
 
-Modular procedural terrain generator
+Soon™
