@@ -8,7 +8,7 @@ bluemars.vcxproj*
 cmake_install.cmake
 CMakeFiles/
 CMakeCache.txt
-Makefile
+Makefile*
 
 # Executable from compilation on Linux
 BlueMars
