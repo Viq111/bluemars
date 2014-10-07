@@ -1,20 +1,15 @@
-#ifndef INCLUDE_BASELAYER
-#define INCLUDE_BASELAYER
-
-#include <memory>
-#include <vector>
+#include "baselayer.h"
 #include "chunkdata.h"
 
-class BaseLayer
+class Flat: public BaseLayer
 {
  public:
-  BaseLayer();
-  float get(long x, long y);
-  virtual void preGenerateChunk(unsigned int x, unsigned int y) = 0;
+  void preGenerateChunk(unsigned int, unsigned int);
+  Flat();
  private:
   unsigned short chunkSize = 1024;
   std::vector< std::shared_ptr<BaseLayer> > dependentLayers;
   std::map< std::pair<unsigned int, unsigned int>, std::shared_ptr<ChunkData> > data ;
+
 };
 
-#endif
