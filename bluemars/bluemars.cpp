@@ -29,4 +29,5 @@ int main(int argc, char** argv)
   new Flat();
   map.addLayer("flat", std::make_shared<Flat> (Flat()));
   std::cout << map.get("flat", 10000, 10000) << std::endl;
+  std::cout << map.get("flat", 10, 10) << std::endl;
 }
