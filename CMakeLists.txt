@@ -8,6 +8,9 @@ LIST(APPEND CMAKE_CXX_FLAGS "-std=c++0x")
 INCLUDE_DIRECTORIES(./bluemars)
 SET(SOURCE_FILES 
 bluemars/bluemars.cpp
+bluemars/baselayer.cpp
+bluemars/chunkdata.cpp
+bluemars/flat.cpp
 )
 
 ADD_EXECUTABLE(BlueMars ${SOURCE_FILES})
