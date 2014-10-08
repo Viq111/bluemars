@@ -10,9 +10,6 @@ CMakeFiles/
 CMakeCache.txt
 Makefile*
 
-# Executable from compilation on Linux
-BlueMars
-
 # Build dir
 Debug
 Release
