@@ -1,5 +1,9 @@
 #include "flat.h"
 
+Flat::Flat()
+{
+}
+
 void Flat::preGenerateChunk(unsigned int chunk_x, unsigned int chunk_y)
 {
 	ChunkData* chunk = new ChunkData();

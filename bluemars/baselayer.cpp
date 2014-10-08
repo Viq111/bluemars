@@ -34,15 +34,4 @@ void BaseLayer::listchunks()
 	}
 }
 
-BaseLayer::~BaseLayer()
-{
-  for(auto i = 0; i!= dependentLayers.size(); ++i)
-    {
-      dependentLayers[i].reset();
-    }
-  for(auto it = chunk_map.begin(); it!=chunk_map.end(); ++it)
-    {
-      std::shared_ptr<ChunkData> ptr = it->second;
-      ptr.reset();
-    }
-}
+

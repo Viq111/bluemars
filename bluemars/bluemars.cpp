@@ -29,23 +29,15 @@ void BlueMarsMap::listchunks()
     }
 }
 
-BlueMarsMap::~BlueMarsMap()
-{
-  for(auto it=layers.begin(); it!=layers.end(); ++it)
-    {
-      std::shared_ptr<BaseLayer> ptr = it->second;
-      ptr.reset();
-    }
-}
 int main(int argc, char** argv)
 {
-  test();
+	//test();
 }
 
 void test()
 {
   BlueMarsMap map;
-  //new Flat();
+  new Flat();
   map.addLayer("flat", std::make_shared<Flat> (Flat()));
   map.addLayer("flat2", std::make_shared<Flat> (Flat()));
   std::cout << map.get("flat", 10000, 10000) << std::endl;

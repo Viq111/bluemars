@@ -9,6 +9,7 @@
 class Flat: public BaseLayer
 {
 public:
+	Flat();
 	void preGenerateChunk(unsigned int, unsigned int);
   
 };
