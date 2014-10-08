@@ -2,6 +2,7 @@
 
 BaseLayer::BaseLayer()
 {
+	chunkSize = 1024; // Default value for chunkSize
 }
 
 float BaseLayer::get(long x, long y)
