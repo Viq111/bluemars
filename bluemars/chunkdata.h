@@ -1,12 +1,14 @@
 #ifndef INCLUDE_CHUNKDATA
 #define INCLUDE_CHUNKDATA
 
-#include <map>
+#include <vector>
 
-struct ChunkData {
-  int chunk_x;
-  int chunk_y;
-  std::map < std::pair<unsigned int, unsigned int>, float> data;
+struct ChunkData
+{
+	ChunkData(int chunk_size);
+	int chunk_x;
+	int chunk_y;
+	std::vector<float> data;
 };
 
 #endif
