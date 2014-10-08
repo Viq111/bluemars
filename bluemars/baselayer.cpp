@@ -1,6 +1,4 @@
 #include "baselayer.h"
-#include <iostream>
-#include "chunkdata.h"
 
 float BaseLayer::get(long x, long y)
 {
@@ -27,7 +25,7 @@ void BaseLayer::listchunks()
       std::pair<unsigned int, unsigned int> pair = it->first;
       std::cout << " - ";
       std::cout << "Chunk X : " << pair.first << "\t";
-      std::cout << "Chunk Y : " << pair.second << "\n\t";
+      std::cout << "Chunk Y : " << pair.second << "\t" << std::endl;
     }
 }
 

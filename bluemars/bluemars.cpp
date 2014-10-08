@@ -1,9 +1,4 @@
-#include <vector>
-#include <iostream>
-#include <memory>
 #include "bluemars.h"
-#include "baselayer.h"
-#include "flat.h"
 
 void BlueMarsMap::addLayer(std::string name, std::shared_ptr<BaseLayer> layer_ptr)
 {
@@ -27,16 +22,16 @@ void BlueMarsMap::listchunks()
 {
   for(auto it=layers.begin(); it!=layers.end(); ++it)
     {
-      std::cout << "\n***\n" << it->first << "\n\t";
+      std::cout << std::endl << "***" << std::endl << it->first << std::endl;
       std::shared_ptr<BaseLayer> layer=it->second;
       layer -> listchunks();
-      std::cout << "\n***\n";
+      std::cout << std::endl << "***" << std::endl;
     }
 }
 
 int main(int argc, char** argv)
 {
-  //  test();
+  //test();
 }
 
 void test()

@@ -1,8 +1,10 @@
 #ifndef INCLUDE_BASELAYER
 #define INCLUDE_BASELAYER
 
+#include <string>
 #include <memory>
 #include <vector>
+#include <iostream>
 #include "chunkdata.h"
 
 class BaseLayer

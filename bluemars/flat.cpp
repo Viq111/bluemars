@@ -1,5 +1,4 @@
 #include "flat.h"
-#include <iostream>
 
 void Flat::preGenerateChunk(unsigned int x, unsigned int y)
 {

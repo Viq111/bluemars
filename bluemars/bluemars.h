@@ -1,9 +1,12 @@
 #ifndef INCLUDE_BLUEMARSMAP
 #define INCLUDE_BLUEMARSMAP
 
+#include <string>
 #include <map>
 #include <memory>
+#include <iostream>
 #include "baselayer.h"
+#include "flat.h"
 
 class BlueMarsMap
 {
