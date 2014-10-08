@@ -13,7 +13,7 @@ void Flat::preGenerateChunk(unsigned int x, unsigned int y)
 	  chunk.data[std::make_pair(i_x, i_y)] = (float)i_x+i_y;
 	}
     }
-  this->data.insert({std::make_pair(x,y), std::make_shared<ChunkData>(chunk)});
+  this->chunk_map.insert({std::make_pair(x,y), std::make_shared<ChunkData>(chunk)});
   
 
 }

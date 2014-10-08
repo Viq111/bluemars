@@ -23,11 +23,34 @@ float BlueMarsMap::get(std::string name, long x, long y)
   }
 }
 
+void BlueMarsMap::listchunks()
+{
+  for(auto it=layers.begin(); it!=layers.end(); ++it)
+    {
+      std::cout << "\n***\n" << it->first << "\n\t";
+      std::shared_ptr<BaseLayer> layer=it->second;
+      layer -> listchunks();
+      std::cout << "\n***\n";
+    }
+}
+
 int main(int argc, char** argv)
+{
+  //  test();
+}
+
+void test()
 {
   BlueMarsMap map;
   new Flat();
   map.addLayer("flat", std::make_shared<Flat> (Flat()));
+  map.addLayer("flat2", std::make_shared<Flat> (Flat()));
   std::cout << map.get("flat", 10000, 10000) << std::endl;
+  map.listchunks();
   std::cout << map.get("flat", 10, 10) << std::endl;
+  map.listchunks();
+  std::cout << map.get("flat", 10002, 10002) << std::endl;
+  std::cout << map.get("flat", 20, 20) << std::endl;
+  std::cout << map.get("flat2",10,10) << std::endl;
+  map.listchunks();
 }

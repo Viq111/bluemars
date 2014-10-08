@@ -8,16 +8,27 @@ float BaseLayer::get(long x, long y)
   unsigned int chunk_y = y/1024;
   float value;
   std::pair<unsigned int, unsigned int> pair = std::make_pair(chunk_x, chunk_y);
-  if (data.find(pair) != data.end())
+  if (chunk_map.find(pair) != chunk_map.end())
     {
-      value = data[pair]->data[std::make_pair(x%1024,y%1024)];
+      value = chunk_map[pair]->data[std::make_pair(x%1024,y%1024)];
     }
   else
     {
       preGenerateChunk(chunk_x, chunk_y);
-      value = this->data[pair]->data[std::make_pair(x%1024,y%1024)];
+      value = this->chunk_map[pair]->data[std::make_pair(x%1024,y%1024)];
     }
   return value;
+}
+
+void BaseLayer::listchunks()
+{
+  for(auto it=chunk_map.begin(); it!=chunk_map.end(); ++it)
+    {
+      std::pair<unsigned int, unsigned int> pair = it->first;
+      std::cout << " - ";
+      std::cout << "Chunk X : " << pair.first << "\t";
+      std::cout << "Chunk Y : " << pair.second << "\n\t";
+    }
 }
 
 BaseLayer::BaseLayer()
