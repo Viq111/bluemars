@@ -8,9 +8,10 @@
 
 class Flat: public BaseLayer
 {
- public:
-  void preGenerateChunk(unsigned int, unsigned int);
-  Flat();
+public:
+	Flat();
+	void preGenerateChunk(unsigned int, unsigned int);
+  
 };
 
 #endif

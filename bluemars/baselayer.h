@@ -12,7 +12,7 @@ class BaseLayer
  public:
   BaseLayer();
   float get(long x, long y);
-  virtual void preGenerateChunk(unsigned int x, unsigned int y) = 0;
+  virtual void preGenerateChunk(unsigned int chunk_x, unsigned int chunk_y) = 0;
   void listchunks();
  protected:
   unsigned short chunkSize = 1024;
