@@ -2,8 +2,10 @@ language: cpp
 compiler:
   - gcc
   - clang
+before_install:
+  - sudo apt-get update
 install:
-  - cmake
+  - sudo apt-get install cmake
 script: "cmake . && make"
 os:
   - linux
