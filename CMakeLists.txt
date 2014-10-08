@@ -9,6 +9,7 @@ INCLUDE_DIRECTORIES(./bluemars)
 SET(SOURCE_FILES 
 bluemars/bluemars.cpp
 bluemars/baselayer.cpp
+bluemars/chunkdata.cpp
 bluemars/flat.cpp
 )
 
