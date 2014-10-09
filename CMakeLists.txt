@@ -8,9 +8,32 @@ SET( BlueMars_REVISION_VERSION 0 )
 LIST(APPEND CMAKE_CXX_FLAGS "-std=c++0x")
 
 # Give the user the possibility to enable/disable modules
-SET( BlueMars_BUILD_SHARED_LIBS true CACHE BOOL "Build shared library." )
+SET( BUILD_SHARED_LIBS true CACHE BOOL "Build shared library." )
 SET( BlueMars_BUILD_2D_VISUALIZER false CACHE BOOL "Build 2D Visualizer" )
 SET( BlueMars_BUILD_UNITTEST false CACHE BOOL "Build unit tests." )
+
+# For Visual Studio need to change the flags when compiling static libs, need to change flags
+# See http://www.cmake.org/Wiki/CMake_FAQ#How_can_I_build_my_MSVC_application_with_a_static_runtime.3F
+IF ( WIN32 )
+	IF ( BUILD_SHARED_LIBS )
+		foreach(flag_var
+		CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE
+		CMAKE_CXX_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_RELWITHDEBINFO)
+			if(${flag_var} MATCHES "/MT")
+				string(REGEX REPLACE "/MT" "/MD" ${flag_var} "${${flag_var}}")
+			endif(${flag_var} MATCHES "/MT")
+		endforeach(flag_var)
+	ELSE()
+		foreach(flag_var
+		CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE
+		CMAKE_CXX_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_RELWITHDEBINFO)
+			if(${flag_var} MATCHES "/MD")
+				string(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
+			endif(${flag_var} MATCHES "/MD")
+		endforeach(flag_var)
+	ENDIF()
+ENDIF()
+
 
 # Find dependancies
 ## For 2D Viz
@@ -51,15 +74,15 @@ ENDIF()
 
 IF( BlueMars_BUILD_UNITTEST )
 	SET( UNITTEST_SOURCE_FILES
+	unittest/unittest.cpp
 	)
 ENDIF()
 
 # Let's build
-IF ( BlueMars_BUILD_SHARED_LIBS )
+IF ( BUILD_SHARED_LIBS )
 	ADD_LIBRARY(BlueMars SHARED ${BLUEMARS_SOURCE_FILES} )
 ELSE()
-	## ToDo - Implement possibility to build static
-	MESSAGE( FATAL_ERROR "Building static libraries is not supported yet!" )
+	ADD_LIBRARY(BlueMars ${BLUEMARS_SOURCE_FILES} )
 ENDIF()
 
 IF ( BlueMars_BUILD_2D_VISUALIZER )

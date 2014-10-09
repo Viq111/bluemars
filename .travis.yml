@@ -6,7 +6,21 @@ before_install:
   - sudo apt-get update
 install:
   - sudo apt-get install cmake
-script: "cmake . && make"
+script: 
+  - "echo 'Building with static linking...'"
+  - "mkdir build_static"
+  - "cd build_static"
+  - "cmake -DBlueMars_BUILD_UNITTEST=TRUE -DBUILD_SHARED_LIBS=FALSE .."
+  - "make"
+  - "./unittests"
+  - "cd .."
+  - "echo '-------------------------------'"
+  - "echo 'Building with dynamic linking...' "
+  - "mkdir build_dynamic"
+  - "cd build_dynamic"
+  - "cmake -DBlueMars_BUILD_UNITTEST=TRUE -DBUILD_SHARED_LIBS=TRUE .."
+  - "make"
+  - "./unittests"
 os:
   - linux
   - osx
