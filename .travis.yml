@@ -6,7 +6,10 @@ before_install:
   - sudo apt-get update
 install:
   - sudo apt-get install cmake
-script: "cmake . && make"
+script: 
+  - "cmake -DBlueMars_BUILD_UNITTEST=TRUE ." 
+  - make
+  - ./unittests
 os:
   - linux
   - osx
