@@ -7,7 +7,16 @@ before_install:
 install:
   - sudo apt-get install cmake
 script: 
-  - "cmake -DBlueMars_BUILD_UNITTEST=TRUE ." 
+  - echo "Building with static linking..." 
+  - cmake -DBlueMars_BUILD_UNITTEST=TRUE -DBUILD_SHARED_LIBS=FALSE build_static
+  - cd build_static
+  - make
+  - ./unittests
+  - cd ..
+  - echo "-------------------------------"
+  - echo "Building with dynamic linking..." 
+  - cmake -DBlueMars_BUILD_UNITTEST=TRUE -DBUILD_SHARED_LIBS=TRUE build_dynamic
+  - cd build_dynamic
   - make
   - ./unittests
 os:
