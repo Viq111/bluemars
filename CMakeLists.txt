@@ -51,6 +51,7 @@ ENDIF()
 
 IF( BlueMars_BUILD_UNITTEST )
 	SET( UNITTEST_SOURCE_FILES
+	unittest/unittest.cpp
 	)
 ENDIF()
 
