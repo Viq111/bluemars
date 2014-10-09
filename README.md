@@ -1,4 +1,4 @@
-BlueMars - A modular procedural terrain generator [![Build Status](https://travis-ci.org/Viq111/bluemars.svg?branch=travis)](https://travis-ci.org/Viq111/bluemars)
+BlueMars - A modular procedural terrain generator [![Build Status](https://travis-ci.org/Viq111/bluemars.svg?branch=master)](https://travis-ci.org/Viq111/bluemars)
 ========
 ## How to build on Linux
 - Install CMake and tools needed to compile/debug (g++, gdb, make, etc...)
