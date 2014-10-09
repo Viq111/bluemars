@@ -13,9 +13,9 @@ class BaseLayer
  public:
   BaseLayer();
   float get(long x, long y);
-  virtual void preGenerateChunk(unsigned int chunk_x, unsigned int chunk_y) = 0;
+  virtual std::shared_ptr<ChunkData> preGenerateChunk(unsigned int chunk_x, unsigned int chunk_y) = 0;
   void listchunks();
- protected:
+  protected:
   unsigned short chunkSize; // See contructor for default value
   std::vector< std::shared_ptr<BaseLayer> > dependentLayers;
   std::map< std::pair<unsigned int, unsigned int>, std::shared_ptr<ChunkData> > chunk_map ;

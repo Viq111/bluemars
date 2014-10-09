@@ -18,9 +18,10 @@ float BaseLayer::get(long x, long y)
 	}
 	else
 	{
-		preGenerateChunk(chunk_x, chunk_y); // Else generate it and save it in chunk_map
-		// WARNING: Save is done in preGenerateChunk, is this normal ?
-		value = chunk_map[chunk_coordinates]->data[in_chunk_coordinates];
+	  std::shared_ptr<ChunkData> chunk_ptr = preGenerateChunk(chunk_x, chunk_y);
+	  auto chunk_coord = std::make_pair(chunk_x, chunk_y);
+	  this->chunk_map.insert({chunk_coord, chunk_ptr});
+	  value = chunk_map[chunk_coordinates]->data[in_chunk_coordinates];
 	}
 	return value;
 }
@@ -34,5 +35,4 @@ void BaseLayer::listchunks()
 		std::cout << " - " << coordinates.first << ";" << coordinates.second << std::endl;
 	}
 }
-
 

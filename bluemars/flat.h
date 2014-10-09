@@ -10,7 +10,7 @@ class Flat: public BaseLayer
 {
 public:
 	Flat();
-	void preGenerateChunk(unsigned int, unsigned int);
+	std::shared_ptr<ChunkData> preGenerateChunk(unsigned int, unsigned int);
   
 };
 

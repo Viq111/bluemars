@@ -4,7 +4,7 @@ Flat::Flat()
 {
 }
 
-void Flat::preGenerateChunk(unsigned int chunk_x, unsigned int chunk_y)
+std::shared_ptr<ChunkData> Flat::preGenerateChunk(unsigned int chunk_x, unsigned int chunk_y)
 {
 	ChunkData* chunk = new ChunkData(chunkSize);
 	chunk->chunk_x = chunk_x;
@@ -17,7 +17,7 @@ void Flat::preGenerateChunk(unsigned int chunk_x, unsigned int chunk_y)
 			chunk->data[in_chunk_coordinates] = (float) i_x+i_y;
 		}
 	}
-	this->chunk_map.insert({ std::make_pair(chunk_x, chunk_y), std::unique_ptr<ChunkData>(chunk) });
+	return std::shared_ptr<ChunkData>(chunk);
 }
 
 

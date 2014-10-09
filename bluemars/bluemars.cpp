@@ -31,7 +31,7 @@ void BlueMarsMap::listchunks()
 
 int main(int argc, char** argv)
 {
-	//test();
+  //test();
 }
 
 void test()
