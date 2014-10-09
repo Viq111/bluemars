@@ -8,7 +8,7 @@ SET( BlueMars_REVISION_VERSION 0 )
 LIST(APPEND CMAKE_CXX_FLAGS "-std=c++0x")
 
 # Give the user the possibility to enable/disable modules
-SET( BlueMars_BUILD_SHARED_LIBS true CACHE BOOL "Build shared library." )
+SET( BUILD_SHARED_LIBS true CACHE BOOL "Build shared library." )
 SET( BlueMars_BUILD_2D_VISUALIZER false CACHE BOOL "Build 2D Visualizer" )
 SET( BlueMars_BUILD_UNITTEST false CACHE BOOL "Build unit tests." )
 
@@ -56,7 +56,7 @@ IF( BlueMars_BUILD_UNITTEST )
 ENDIF()
 
 # Let's build
-IF ( BlueMars_BUILD_SHARED_LIBS )
+IF ( BUILD_SHARED_LIBS )
 	ADD_LIBRARY(BlueMars SHARED ${BLUEMARS_SOURCE_FILES} )
 ELSE()
 	## ToDo - Implement possibility to build static
