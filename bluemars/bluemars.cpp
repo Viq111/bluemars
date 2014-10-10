@@ -1,4 +1,7 @@
 #include "bluemars.h"
+#include "baselayer.h"
+#include "flat.h"
+#include "chunkdata.h"
 
 void BlueMarsMap::addLayer(std::string name, std::shared_ptr<BaseLayer> layer_ptr)
 {
@@ -29,15 +32,24 @@ void BlueMarsMap::listchunks()
     }
 }
 
-int main(int argc, char** argv)
+int BlueMarsMap::nbChunks()
 {
-  //test();
+	int result=0;
+	for(auto it=layers.begin(); it!=layers.end(); ++it)
+	{
+		std::shared_ptr<BaseLayer> layer=it->second;
+		result += layer->nbChunks();
+	}
+	return result;
 }
+//int main(int argc, char** argv)
+//{
+  //test();
+//}
 
 void test()
 {
   BlueMarsMap map;
-  new Flat();
   map.addLayer("flat", std::make_shared<Flat> (Flat()));
   map.addLayer("flat2", std::make_shared<Flat> (Flat()));
   std::cout << map.get("flat", 10000, 10000) << std::endl;

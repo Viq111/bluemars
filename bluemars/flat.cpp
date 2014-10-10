@@ -1,9 +1,5 @@
 #include "flat.h"
 
-Flat::Flat()
-{
-}
-
 std::shared_ptr<ChunkData> Flat::preGenerateChunk(unsigned int chunk_x, unsigned int chunk_y)
 {
 	ChunkData* chunk = new ChunkData(chunkSize);
@@ -20,5 +16,5 @@ std::shared_ptr<ChunkData> Flat::preGenerateChunk(unsigned int chunk_x, unsigned
 	return std::shared_ptr<ChunkData>(chunk);
 }
 
-
+Flat::Flat(){}
 

@@ -36,3 +36,7 @@ void BaseLayer::listchunks()
 	}
 }
 
+unsigned int BaseLayer::nbChunks()
+{
+	return chunk_map.size();
+}

@@ -91,5 +91,6 @@ ENDIF()
 
 IF ( BlueMars_BUILD_UNITTEST )
 	ADD_EXECUTABLE( unittests ${UNITTEST_SOURCE_FILES} )
-	TARGET_LINK_LIBRARIES( unittests gtest_main )
+	TARGET_LINK_LIBRARIES( unittests gtest_main)
+	TARGET_LINK_LIBRARIES( unittests BlueMars )
 ENDIF()
