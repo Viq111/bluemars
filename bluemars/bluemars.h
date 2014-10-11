@@ -6,7 +6,7 @@
 #include <memory>
 #include <iostream>
 #include "baselayer.h"
-#include "flat.h"
+#include "simpleAdditionLayer.h"
 
 class BlueMarsMap
 {
@@ -14,6 +14,7 @@ class BlueMarsMap
   void addLayer(std::string, std::shared_ptr<BaseLayer>);
   float get(std::string, long, long);
   void listchunks();
+  int nbChunks();
  private:
   std::map <std::string, std::shared_ptr<BaseLayer> > layers;
 };

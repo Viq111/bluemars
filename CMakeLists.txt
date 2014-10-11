@@ -63,8 +63,8 @@ bluemars/baselayer.h
 bluemars/baselayer.cpp
 bluemars/chunkdata.h
 bluemars/chunkdata.cpp
-bluemars/flat.h
-bluemars/flat.cpp
+bluemars/simpleAdditionLayer.h
+bluemars/simpleAdditionLayer.cpp
 )
 
 IF( BlueMars_BUILD_2D_VISUALIZER )
@@ -91,5 +91,6 @@ ENDIF()
 
 IF ( BlueMars_BUILD_UNITTEST )
 	ADD_EXECUTABLE( unittests ${UNITTEST_SOURCE_FILES} )
-	TARGET_LINK_LIBRARIES( unittests gtest_main )
+	TARGET_LINK_LIBRARIES( unittests gtest_main)
+	TARGET_LINK_LIBRARIES( unittests BlueMars )
 ENDIF()

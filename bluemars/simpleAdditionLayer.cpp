@@ -1,10 +1,6 @@
-#include "flat.h"
+#include "simpleAdditionLayer.h"
 
-Flat::Flat()
-{
-}
-
-std::shared_ptr<ChunkData> Flat::preGenerateChunk(unsigned int chunk_x, unsigned int chunk_y)
+std::shared_ptr<ChunkData> simpleAdditionLayer::preGenerateChunk(unsigned int chunk_x, unsigned int chunk_y)
 {
 	ChunkData* chunk = new ChunkData(chunkSize);
 	chunk->chunk_x = chunk_x;
@@ -20,5 +16,5 @@ std::shared_ptr<ChunkData> Flat::preGenerateChunk(unsigned int chunk_x, unsigned
 	return std::shared_ptr<ChunkData>(chunk);
 }
 
-
+simpleAdditionLayer::simpleAdditionLayer(){}
 
