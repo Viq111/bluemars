@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 #include <iostream>
+#include <cmath>
 #include "chunkdata.h"
 
 long mod(long a, long b); // Modulo helper method, ToDo: move this inside a helper file!
