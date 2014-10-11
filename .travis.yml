@@ -2,21 +2,28 @@ language: cpp
 compiler:
   - gcc
 before_install:
-  - sudo apt-get update
+  # Trying to install compile for C++11 (needed for SFGUI)
+  # g++4.8.1
+  - if [ "$CXX" == "g++" ]; then sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test; fi
+  ## clang 3.4
+  #- if [ "$CXX" == "clang++" ]; then sudo add-apt-repository -y ppa:h-rayflood/llvm; fi
+  - sudo apt-get update -qq
+  
 install:
-  - sudo apt-get install cmake
+  - sudo apt-get install cmake -qq
+  # g++4.8.1
+  - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.8; fi
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8"; fi
+
+  # Install SFML + SFGUI
+  - "chmod +x ./2dvisualizer/sfgui_install.sh"
+  - "./2dvisualizer/sfgui_install.sh"
 script: 
-  - "echo 'Building with static linking...'"
-  - "mkdir build_static"
-  - "cd build_static"
+  - "echo 'Building with static linking...' && mkdir build_static && cd build_static"
   - "cmake -DBlueMars_BUILD_UNITTEST=TRUE -DBUILD_SHARED_LIBS=FALSE .."
   - "make"
   - "./unittests"
-  - "cd .."
-  - "echo '-------------------------------'"
-  - "echo 'Building with dynamic linking...' "
-  - "mkdir build_dynamic"
-  - "cd build_dynamic"
+  - "cd .. && echo '-------------------------------' && echo 'Building with dynamic linking...'  && mkdir build_dynamic && cd build_dynamic"
   - "cmake -DBlueMars_BUILD_UNITTEST=TRUE -DBUILD_SHARED_LIBS=TRUE .."
   - "make"
   - "./unittests"
