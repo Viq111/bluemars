@@ -5,7 +5,10 @@ PROJECT(BlueMars)
 SET( BlueMars_MAJOR_VERSION 0 )
 SET( BlueMars_MINOR_VERSION 1 )
 SET( BlueMars_REVISION_VERSION 0 )
-LIST(APPEND CMAKE_CXX_FLAGS "-std=c++0x")
+
+IF ( CMAKE_COMPILER_IS_GNUCXX )
+	SET( CMAKE_CXX_FLAGS "-std=c++11 -Wall -Wextra -Wshadow -Wconversion -Wno-long-long -pedantic ${CMAKE_CXX_FLAGS}" )
+ENDIF()
 
 # Give the user the possibility to enable/disable modules
 SET( BUILD_SHARED_LIBS true CACHE BOOL "Build shared library." )
