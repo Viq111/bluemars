@@ -63,8 +63,8 @@ bluemars/baselayer.h
 bluemars/baselayer.cpp
 bluemars/chunkdata.h
 bluemars/chunkdata.cpp
-bluemars/flat.h
-bluemars/flat.cpp
+bluemars/simpleAdditionLayer.h
+bluemars/simpleAdditionLayer.cpp
 )
 
 IF( BlueMars_BUILD_2D_VISUALIZER )

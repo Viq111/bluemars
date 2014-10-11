@@ -6,7 +6,7 @@
 #include <memory>
 #include <iostream>
 #include "baselayer.h"
-#include "flat.h"
+#include "simpleAdditionLayer.h"
 
 class BlueMarsMap
 {

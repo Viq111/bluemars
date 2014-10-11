@@ -1,15 +1,15 @@
-#ifndef INCLUDE_FLAT
-#define INCLUDE_FLAT
+#ifndef INCLUDE_simpleAdditionLayer
+#define INCLUDE_simpleAdditionLayer
 
 #include <string>
 #include <iostream>
 #include "baselayer.h"
 #include "chunkdata.h"
 
-class Flat: public BaseLayer
+class simpleAdditionLayer: public BaseLayer
 {
 public:
-	Flat();
+	simpleAdditionLayer();
 	std::shared_ptr<ChunkData> preGenerateChunk(unsigned int, unsigned int);
   
 };
