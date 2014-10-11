@@ -10,7 +10,7 @@ class simpleAdditionLayer: public BaseLayer
 {
 public:
 	simpleAdditionLayer();
-	std::shared_ptr<ChunkData> preGenerateChunk(unsigned int, unsigned int);
+	std::shared_ptr<ChunkData> preGenerateChunk(int chunk_x, int chunk_y);
   
 };
 
