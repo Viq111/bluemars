@@ -12,20 +12,23 @@ Noise::Noise(long s)
 double Noise::discreteNoise(long x, long y, long octave)
 {
     int amplitude = BASE_AMPLITUDE * pow(PERSISTENCE, octave);
-	long temp_seed = (seed + 15859 * x + 11117 * y) * 524288 + 28433 * octave;
+	long temp_seed = (seed * 524288) % MAX_SEED;
+	temp_seed = (temp_seed + (15859 * x)) % MAX_SEED;
+	temp_seed = (temp_seed + (11117 * y)) % MAX_SEED;
+	temp_seed = (temp_seed + (28433 * octave)) % MAX_SEED;
 	rng.seed(temp_seed);
 	long random_value = rng();
-	double ret = ((random_value % amplitude) + MEAN_NOISE_VALUE - amplitude / 2);//retourne un nombre aléatoire entre MEAN_NOISE_VALUE + amplitude/2 et MEAN_NOISE_VALUE - amplitude/2
+	double ret = random_value % amplitude;
 	if (ret < 0) // Because % is not modulo !
 	{
 		ret += amplitude;
 	}
+	ret = ret + MEAN_NOISE_VALUE - amplitude / 2;//retourne un nombre aléatoire entre MEAN_NOISE_VALUE + amplitude/2 et MEAN_NOISE_VALUE - amplitude/2
 	return ret;
 }
 
 double Noise::cosineInterpolate(long X1, long X2, double Z1, double Z2, long x) //renvoie la hauteur z du point d'abscisse x interpollé entre les points (X1,Z1) et (X2,Z2)
 {
-    
     if (X1==X2)
     {
         return Z1;
@@ -42,12 +45,13 @@ double Noise::interpolatedNoise(long x, long y, long octave)
 {
     double waveLength = 1.0f * BASE_WAVE_LENGTH / pow(2,octave);
     //on détermine les quatre points les plus proches de (x,y) et entre lesquels il faut faire l'interpolation :(X1,Y1), (X1,Y2), (X2,Y1), (X2,Y2)
-    int X1 = floor(x / waveLength) * waveLength;
-    int X2 = X1 + waveLength;
-    int Y1 = floor(y / waveLength) * waveLength;
-    int Y2 = Y1 + waveLength;
+    long X1 = floor(x / waveLength) * waveLength;
+    long X2 = X1 + waveLength;
+    long Y1 = floor(y / waveLength) * waveLength;
+    long Y2 = Y1 + waveLength;
     
     //on calcule la valeur du bruit aux quatre points
+	
     double discreteNoiseX1_Y1 = discreteNoise(X1, Y1, octave);
     double discreteNoiseX1_Y2 = discreteNoise(X1, Y2, octave);
     double discreteNoiseX2_Y1 = discreteNoise(X2, Y1, octave);
@@ -73,14 +77,13 @@ double Noise::outputValue(long x, long y, int numberOfOctaves = 8) //l'octave 0 
 
 void Noise::generateOutputFile(long size, int numberOfOctaves)
 {
-    
     FILE* perlinOutputFile = NULL;
     perlinOutputFile = fopen("perlinOutputFile.txt", "w+");
     if (perlinOutputFile != NULL)
     {
-        for (double x=0; x<=size; x++)
+		for (double x = 0; x < size; x++)
         {
-            for (double y=0; y<=size; y++)
+			for (double y = 0; y < size; y++)
             {
                 double z = outputValue(x,y,numberOfOctaves);
                 fprintf(perlinOutputFile, "%f;%f;%f\n", x,y,z);

@@ -7,6 +7,7 @@
 #define BASE_AMPLITUDE 256
 #define MEAN_NOISE_VALUE 0
 #define PERSISTENCE 0.5 //coeff par lequel on multiplie l'amplitude à chaque octave (à chaque fois que la frequence double)
+#define MAX_SEED 1317624576693539401 // This is long_max / 7
 
 class Noise
 {
