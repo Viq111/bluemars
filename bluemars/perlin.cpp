@@ -2,6 +2,7 @@
 #define INCLUDE_PERLIN
 
 #include <iostream>
+#define _USE_MATH_DEFINES // Needed on windows for M_PI
 #include <math.h>
 #include <stdlib.h>
 #include <perlin.h>
