@@ -1,4 +1,8 @@
-#define CHUNK_SIZE 1024
+#ifndef INCLUDE_PERLIN
+#define INCLUDE_PERLIN
+
+#include <random>
+
 #define BASE_WAVE_LENGTH 128
 #define BASE_AMPLITUDE 256
 #define MEAN_NOISE_VALUE 0
@@ -7,13 +11,17 @@
 class Noise
 {
 public:
-    Noise(double seed);
-    void generateOutputFile(double size, int numberOfOctaves);
-    double seed;
-    double discreteNoise(double x, double y, double amplitude);
+    Noise(long seed);
+	double outputValue(long x, long y, int octaves);
+    void generateOutputFile(long size, int numberOfOctaves); // ToDo - Remove, debug only
 
+protected:
+    long seed;
+	std::mt19937 rng; // Random number generator
+    double discreteNoise(long x, long y, long amplitude);
+    double interpolatedNoise(long x, long y, long waveLength = BASE_WAVE_LENGTH);
+    double cosineInterpolate(long X1, long X2, double Z1, double Z2, long x);
     
-    double interpolatedNoise(double x, double y, double waveLength);
-    double cosineInterpolate(double X1, double X2, double Z1, double Z2, double x);
-    double outputValue(double x, double y, int octaves);
 };
+
+#endif
