@@ -66,6 +66,8 @@ bluemars/baselayer.h
 bluemars/baselayer.cpp
 bluemars/chunkdata.h
 bluemars/chunkdata.cpp
+bluemars/perlin.h
+bluemars/perlin.cpp
 bluemars/simpleAdditionLayer.h
 bluemars/simpleAdditionLayer.cpp
 )
