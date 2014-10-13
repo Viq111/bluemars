@@ -14,6 +14,14 @@ TEST(BlueMarsTest, KnownCoord)
 	ASSERT_EQ(value,1952);
 	value = map.get("simpleAdditionLayer",1000,2000);
 	ASSERT_EQ(value,1976);
+	value = map.get("simpleAdditionLayer", -10, 5);
+	ASSERT_EQ(value, 1019);
+	value = map.get("simpleAdditionLayer", -10, -10);
+	ASSERT_EQ(value, 2028);
+	value = map.get("simpleAdditionLayer", -2000, -2000);
+	ASSERT_EQ(value,96);
+	value = map.get("simpleAdditionLayer", 2000, -2000);
+	ASSERT_EQ(value,1024);
 }
 
 TEST(BlueMarsTest, NBChunks)
@@ -29,6 +37,13 @@ TEST(BlueMarsTest, NBChunks)
 	ASSERT_EQ(map.nbChunks(),2);
 	map.get("simpleAdditionLayer",2000,2000);
 	ASSERT_EQ(map.nbChunks(),3);
-
+	map.get("simpleAdditionLayer", -10, -10);
+	ASSERT_EQ(map.nbChunks(), 4);
+	map.get("simpleAdditionLayer", -2000, -2000);
+	ASSERT_EQ(map.nbChunks(), 5);
+	map.get("simpleAdditionLayer", -2000, 2000);
+	ASSERT_EQ(map.nbChunks(), 6);
+	map.get("simpleAdditionLayer", -1000, -1000);
+	
 }
 	

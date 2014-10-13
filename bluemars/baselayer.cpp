@@ -1,5 +1,10 @@
 #include "baselayer.h"
 
+long mod(long a, long b)
+{
+	return (a%b + b) % b;
+}
+
 BaseLayer::BaseLayer()
 {
 	chunkSize = 1024; // Default value for chunkSize
@@ -7,11 +12,11 @@ BaseLayer::BaseLayer()
 
 float BaseLayer::get(long x, long y)
 {
-	unsigned int chunk_x = x / chunkSize;
-	unsigned int chunk_y = y / chunkSize;
+	int chunk_x = floor(x * 1.0f / chunkSize);
+	int chunk_y = floor(y * 1.0f / chunkSize);
 	float value;
-	std::pair<unsigned int, unsigned int> chunk_coordinates = std::make_pair(chunk_x, chunk_y);
-	unsigned long in_chunk_coordinates = (x % chunkSize) * chunkSize + y % chunkSize;
+	std::pair<int, int> chunk_coordinates = std::make_pair(chunk_x, chunk_y);
+	long in_chunk_coordinates = (mod(x, chunkSize)) * chunkSize + mod(y, chunkSize);
 	if (chunk_map.find(chunk_coordinates) != chunk_map.end()) // If chunk already exists
 	{
 		value = chunk_map[chunk_coordinates]->data[in_chunk_coordinates]; // Get value
@@ -19,8 +24,7 @@ float BaseLayer::get(long x, long y)
 	else
 	{
 	  std::shared_ptr<ChunkData> chunk_ptr = preGenerateChunk(chunk_x, chunk_y);
-	  auto chunk_coord = std::make_pair(chunk_x, chunk_y);
-	  this->chunk_map.insert({chunk_coord, chunk_ptr});
+	  chunk_map.insert({chunk_coordinates, chunk_ptr});
 	  value = chunk_map[chunk_coordinates]->data[in_chunk_coordinates];
 	}
 	return value;
@@ -31,7 +35,7 @@ void BaseLayer::listchunks()
 	std::cout << "Currently loaded chunks:" << std::endl;
 	for(auto it=chunk_map.begin(); it!=chunk_map.end(); ++it)
 	{
-		std::pair<unsigned int, unsigned int> coordinates = it->first;
+		std::pair<int, int> coordinates = it->first;
 		std::cout << " - " << coordinates.first << ";" << coordinates.second << std::endl;
 	}
 }
