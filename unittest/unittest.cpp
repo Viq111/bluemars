@@ -1,6 +1,7 @@
 #include "gtest/include/gtest/gtest.h"
 #include "bluemars.h"
 #include "simpleAdditionLayer.h"
+#include "perlin.h"
 
 TEST(BlueMarsTest, KnownCoord)
 {
@@ -44,6 +45,18 @@ TEST(BlueMarsTest, NBChunks)
 	map.get("simpleAdditionLayer", -2000, 2000);
 	ASSERT_EQ(map.nbChunks(), 6);
 	map.get("simpleAdditionLayer", -1000, -1000);
-	
+}
+
+TEST(PerlinTest, NoiseFunction)
+{
+    Noise noise1(1);
+    Noise noise2(1);
+    double X = 384;
+    double Y = 117;
+    double noise1ForXY = noise1.outputValue(X,Y,5);
+    double noise1forYX = noise1.outputValue(Y,X,5);
+    double noise2ForXY = noise2.outputValue(X,Y,5);
+    ASSERT_EQ(noise1ForXY, noise2ForXY);
+    EXPECT_NE(noise1ForXY, noise1ForYX);
 }
 	

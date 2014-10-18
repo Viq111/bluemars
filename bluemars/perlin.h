@@ -10,10 +10,10 @@ public:
     Noise(double seed);
     void generateOutputFile(double size, int numberOfOctaves);
     double seed;
-    double discreteNoise(double x, double y, double amplitude);
+    double outputValue(double x, double y, int octaves);
 
-    
+private:
     double interpolatedNoise(double x, double y, double waveLength);
     double cosineInterpolate(double X1, double X2, double Z1, double Z2, double x);
-    double outputValue(double x, double y, int octaves);
+    double discreteNoise(double x, double y, double amplitude);
 };
