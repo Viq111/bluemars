@@ -1,19 +1,30 @@
-#define CHUNK_SIZE 1024
+#ifndef INCLUDE_PERLIN
+#define INCLUDE_PERLIN
+
+#include <random>
+
 #define BASE_WAVE_LENGTH 128
 #define BASE_AMPLITUDE 256
-#define MEAN_NOISE_VALUE 0
 #define PERSISTENCE 0.5 //coeff par lequel on multiplie l'amplitude à chaque octave (à chaque fois que la frequence double)
+#define MAX_SEED 1317624576693539401 // This is long_max / 7
+
+long murmurHash2(long seed);
 
 class Noise
 {
 public:
-    Noise(double seed);
-    void generateOutputFile(double size, int numberOfOctaves);
-    double seed;
-    double outputValue(double x, double y, int octaves);
+    Noise(long seed);
+	double outputValue(long x, long y, int octaves);
+    void generateOutputFile(long size, int numberOfOctaves); // ToDo - Remove, debug only
 
-private:
-    double interpolatedNoise(double x, double y, double waveLength);
-    double cosineInterpolate(double X1, double X2, double Z1, double Z2, double x);
-    double discreteNoise(double x, double y, double amplitude);
+protected:
+    long seed;
+	std::mt19937 rng; // Random number generator
+    double discreteNoise(long x, long y, int octave);
+    double interpolatedNoise(long x, long y, long waveLength = BASE_WAVE_LENGTH);
+    double cosineInterpolate(long X1, long X2, double Z1, double Z2, long x);
+    
 };
+
+#endif
+
