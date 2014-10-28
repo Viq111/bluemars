@@ -5,10 +5,11 @@
 #include <map>
 #include <memory>
 #include <iostream>
+#include "windowsSpecific.h"
 #include "baselayer.h"
 #include "simpleAdditionLayer.h"
 
-class BlueMarsMap
+class BlueMars_EXPORT BlueMarsMap
 {
  public:
   void addLayer(std::string, std::shared_ptr<BaseLayer>);

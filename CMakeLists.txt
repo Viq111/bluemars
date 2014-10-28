@@ -41,7 +41,10 @@ ENDIF()
 # Find dependancies
 ## For 2D Viz
 IF( BlueMars_BUILD_2D_VISUALIZER )
+	FIND_PACKAGE( SFML REQUIRED )
 	FIND_PACKAGE( SFGUI REQUIRED )
+	INCLUDE_DIRECTORIES( ${SFGUI_INCLUDE_DIR} )
+	INCLUDE_DIRECTORIES( ${SFML_INCLUDE_DIR} )
 ENDIF()
 ## For unittest
 IF( BlueMars_BUILD_UNITTEST )
@@ -70,10 +73,13 @@ bluemars/perlin.h
 bluemars/perlin.cpp
 bluemars/simpleAdditionLayer.h
 bluemars/simpleAdditionLayer.cpp
+bluemars/windowsSpecific.h
 )
 
 IF( BlueMars_BUILD_2D_VISUALIZER )
 	SET( 2DVISUALIZER_SOURCE_FILES
+	2dvisualizer/2dvisualizer.h
+	2dvisualizer/2dvisualizer.cpp
 	)
 ENDIF()
 
@@ -87,11 +93,13 @@ ENDIF()
 IF ( BUILD_SHARED_LIBS )
 	ADD_LIBRARY(BlueMars SHARED ${BLUEMARS_SOURCE_FILES} )
 ELSE()
-	ADD_LIBRARY(BlueMars ${BLUEMARS_SOURCE_FILES} )
+	ADD_LIBRARY(BlueMars STATIC ${BLUEMARS_SOURCE_FILES} )
 ENDIF()
 
 IF ( BlueMars_BUILD_2D_VISUALIZER )
 	ADD_EXECUTABLE( BlueMars2DVisualizer ${2DVISUALIZER_SOURCE_FILES} )
+	TARGET_LINK_LIBRARIES( BlueMars2DVisualizer sfgui ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${OPENGL_glu_LIBRARY} ${OPENGL_gl_LIBRARY} )
+	TARGET_LINK_LIBRARIES( BlueMars2DVisualizer BlueMars )
 ENDIF()
 
 IF ( BlueMars_BUILD_UNITTEST )
