@@ -1,3 +1,5 @@
+#include <climits>
+
 #include "gtest/include/gtest/gtest.h"
 #include "bluemars.h"
 #include "simpleAdditionLayer.h"
@@ -16,6 +18,77 @@ public:
 };
 
 // Perlin Noise Testing
+
+TEST(PerlinTest, murmurHash_determisn)
+{
+	EXPECT_EQ(murmurHash2(5), murmurHash2(5)); // Check if we always have the same output
+}
+TEST(PerlinTest, murmurHash_uniformDistribution)
+{
+	std::vector<int> distribution = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	for (long i = 0; i < 10000; i++)
+	{
+		long result = murmurHash2(i) % 10;
+		distribution.at(result) = distribution.at(result) + 1;
+	}
+	int minExpected = (int) ((10000 / 10) * 0.8); // Expected in 80%-120% range
+	int maxExpected = (int) ((10000 / 10) * 1.2);
+	for (int i = 0; i < 10; i++)
+	{
+		EXPECT_GE(distribution.at(i), minExpected);
+		EXPECT_LE(distribution.at(i), maxExpected);
+	}
+}
+// No pattern test
+
+TEST(PerlinTest, discreteNoise_determinism)
+{
+	NoisePublic noise(1);
+	EXPECT_EQ(noise.discreteNoise(5, 10, 4), noise.discreteNoise(5, 10, 4));
+}
+
+// No pattern test
+
+TEST(PerlinTest, octaveTest)
+{
+	NoisePublic noise(1);
+	// First compute sum of both octave
+	double sumOct1 = 0, sumOct4 = 0;
+	for (int i = 0; i < 1000; i++)
+	{
+		for (int j = 0; j < 1000; j++)
+		{
+			sumOct1 += noise.discreteNoise(i, j, 1);
+			sumOct4 += noise.discreteNoise(i, j, 4);
+		}
+	}
+	sumOct1 = sumOct1 / (1000 * 1000);
+	sumOct4 = sumOct4 / (1000 * 1000);
+	ASSERT_GT(sumOct1, sumOct4);
+	// Then compute standard deviation
+	double sdOct1 = 0, sdOct4 = 0;
+	for (int i = 0; i < 1000; i++)
+	{
+		for (int j = 0; j < 1000; j++)
+		{
+			sdOct1 += pow(noise.discreteNoise(i, j, 1) - sumOct1, 2);
+			sdOct4 += pow(noise.discreteNoise(i, j, 4) - sumOct4, 2);
+		}
+	}
+	sdOct1 = sdOct1 / (1000 * 1000);
+	sdOct4 = sdOct4 / (1000 * 1000);
+	ASSERT_GT(sdOct1, sdOct4);
+}
+
+TEST(PerlinTest, Noise_seedTtest)
+{
+	Noise noise1(1);
+	Noise noise2(1);
+	Noise noise3(2);
+
+	ASSERT_EQ(noise1.outputValue(5, 10, 8), noise2.outputValue(5, 10, 8));
+	ASSERT_NE(noise1.outputValue(5, 10, 8), noise3.outputValue(5, 10, 8));
+}
 
 TEST(BlueMarsTest, KnownCoord)
 {
