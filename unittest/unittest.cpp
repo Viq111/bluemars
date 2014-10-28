@@ -3,6 +3,19 @@
 #include "simpleAdditionLayer.h"
 #include "perlin.h"
 
+// Protected to public for unit testing
+// Perlin Noise
+class NoisePublic : public Noise
+{
+public:
+	NoisePublic(long seed) : Noise(seed) {}
+	double discreteNoise(long x, long y, int octave) { return Noise::discreteNoise(x, y, octave); }
+	double interpolatedNoise(long x, long y, long waveLength = BASE_WAVE_LENGTH) { return Noise::interpolatedNoise(x, y, waveLength); }
+	double cosineInterpolate(long X1, long X2, double Z1, double Z2, long x) { return Noise::cosineInterpolate(X1, X2, Z1, Z2, x); }
+};
+
+// Perlin Noise Testing
+
 TEST(BlueMarsTest, KnownCoord)
 {
 	BlueMarsMap map;
@@ -57,6 +70,8 @@ TEST(PerlinTest, NoiseFunction)
     double noise1forYX = noise1.outputValue(Y,X,5);
     double noise2ForXY = noise2.outputValue(X,Y,5);
     ASSERT_EQ(noise1ForXY, noise2ForXY);
-    EXPECT_NE(noise1ForXY, noise1ForYX);
+	EXPECT_NE(noise1ForXY, noise1forYX);
 }
-	
+
+
+
