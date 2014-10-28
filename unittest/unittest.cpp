@@ -73,5 +73,58 @@ TEST(PerlinTest, NoiseFunction)
 	EXPECT_NE(noise1ForXY, noise1forYX);
 }
 
+TEST(PerlinTest, cosineInterpolate_at_boundaries)
+{
+    NoisePublic noise(1);
+    long x1 = 5;
+    long x2 = 768;
+    double z1 = 0.8;
+    double z2 = 0.3;
+    ASSERT_EQ(noise.cosineInterpolate(x1,x2,z1,z2,x1), z1);
+    ASSERT_EQ(noise.cosineInterpolate(x1,x2,z1,z2,x2), z2);
+}
+
+TEST(PerlinTest, cosineInterpolate_between_boundaries)
+{
+    NoisePublic noise(1);
+    long x1 = 5;
+    long x2 = 768;
+    long x = 240;
+    double z1 = 0.8;
+    double z2 = 0.3;
+    double z = noise.cosineInterpolate(x1, x2, z1, z2, x);
+    ASSERT_TRUE(z2<=z && z<=z1);
+}
+
+TEST(PerlinTest, consineInterpolate_monotony)
+{
+    NoisePublic noise(1);
+    long x1 = 5;
+    long x2 = 705;
+    long deltaX = (x2-x1)/100;
+    double z1 = 0.24;
+    double z2 = 0.68;
+    double z = 0;
+    double zPrime = 0;
+    bool monotone = z2>=z1;
+    if (z2 >= z1) //we want the interpolate function to be increasing
+    {
+        for (long x=x1; x<=x2; x+=deltaX)
+        {
+            z = noise.cosineInterpolate(x1, x2, z1, z2, x);
+            zPrime = noise.cosineInterpolate(x1, x2, z1, z2, x+deltaX);
+            monotone = monotone && (zPrime - z >= 0); //if at least one "zPrime-z" < 0, result switches to false
+        }
+    }
+    else //we want the interpolate function to be decreasing
+    {
+        for (long x=x1; x<=x2; x+=deltaX)
+        {
+            z = noise.cosineInterpolate(x1, x2, z1, z2, x);
+            zPrime = noise.cosineInterpolate(x1, x2, z1, z2, x+deltaX);
+            monotone = monotone && (zPrime - z <= 0);
+        }
+    }
+}
 
 
