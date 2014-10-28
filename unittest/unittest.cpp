@@ -2,6 +2,7 @@
 #include "bluemars.h"
 #include "simpleAdditionLayer.h"
 #include "perlin.h"
+#include "miniz.c"
 
 // Protected to public for unit testing
 // Perlin Noise
@@ -60,17 +61,31 @@ TEST(BlueMarsTest, NBChunks)
 	map.get("simpleAdditionLayer", -1000, -1000);
 }
 
-TEST(PerlinTest, NoiseFunction)
+TEST(PerlinTest, DeterministicNoise)
 {
     Noise noise1(1);
     Noise noise2(1);
-    double X = 384;
-    double Y = 117;
+    long X = 384;
+    long Y = 117;
     double noise1ForXY = noise1.outputValue(X,Y,5);
-    double noise1forYX = noise1.outputValue(Y,X,5);
     double noise2ForXY = noise2.outputValue(X,Y,5);
     ASSERT_EQ(noise1ForXY, noise2ForXY);
-	EXPECT_NE(noise1ForXY, noise1forYX);
+	  X=1000;
+    Y=1000;
+    noise1ForXY = noise1.outputValue(X,Y,5);
+    noise2ForXY = noise2.outputValue(X,Y,5);
+    ASSERT_EQ(noise1ForXY, noise2ForXY);
+    X=-100;
+    Y=-2000;
+    noise1ForXY = noise1.outputValue(X,Y,5);
+    noise2ForXY = noise2.outputValue(X,Y,5);
+    ASSERT_EQ(noise1ForXY, noise2ForXY);
+    X=-1000;
+    Y=-1000;
+    noise1ForXY = noise1.outputValue(X,Y,5);
+    noise2ForXY = noise2.outputValue(X,Y,5);
+    ASSERT_EQ(noise1ForXY, noise2ForXY);
+
 }
 
 TEST(PerlinTest, cosineInterpolate_at_boundaries)
@@ -127,4 +142,22 @@ TEST(PerlinTest, consineInterpolate_monotony)
     }
 }
 
+TEST(PerlinTest, Murmur_Randomness)
+{
+		long nb_floats = 5048576;
+		const unsigned long BUFSIZE = nb_floats*sizeof(long);
+		unsigned char *unComp = (unsigned char *)malloc(BUFSIZE);
+		//unsigned char unComp[BUFSIZE];
+		long result;
+		for(long i = 0; i<nb_floats; ++i)
+			{
+				result = murmurHash2(i);
+				memcpy(unComp + i*sizeof(long), &result, sizeof(long));
+			}
+		unsigned char* comp = (unsigned char *)malloc((long)(1.1*BUFSIZE));
+		int cmp_status = 1;
+		unsigned long cmp_len = compressBound((long)(BUFSIZE*1.1));
+		cmp_status = compress2(comp, &cmp_len, (const unsigned char *)unComp, BUFSIZE, 9);
+		ASSERT_GT((float)cmp_len/BUFSIZE, 0.9 );
 
+}
