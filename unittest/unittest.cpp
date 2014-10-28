@@ -145,8 +145,8 @@ TEST(PerlinTest, consineInterpolate_monotony)
 TEST(PerlinTest, Murmur_Randomness)
 {
 		long nb_floats = 5048576;
-		const unsigned long BUFSIZE = nb_floats*sizeof(long);
-		unsigned char *unComp = (unsigned char *)malloc(BUFSIZE);
+		const double BUFSIZE = (double)nb_floats*sizeof(long);
+		unsigned char *unComp = (unsigned char *)malloc((size_t)BUFSIZE);
 		//unsigned char unComp[BUFSIZE];
 		long result;
 		for(long i = 0; i<nb_floats; ++i)
@@ -155,9 +155,8 @@ TEST(PerlinTest, Murmur_Randomness)
 				memcpy(unComp + i*sizeof(long), &result, sizeof(long));
 			}
 		unsigned char* comp = (unsigned char *)malloc((long)(1.1*BUFSIZE));
-		int cmp_status = 1;
 		unsigned long cmp_len = compressBound((long)(BUFSIZE*1.1));
-		cmp_status = compress2(comp, &cmp_len, (const unsigned char *)unComp, BUFSIZE, 9);
+		compress2(comp, &cmp_len, (const unsigned char *)unComp, (mz_ulong)BUFSIZE, 9);
 		ASSERT_GT((float)cmp_len/BUFSIZE, 0.9 );
 
 }
