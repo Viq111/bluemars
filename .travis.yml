@@ -20,11 +20,11 @@ install:
   - "./2dvisualizer/sfgui_install.sh"
 script: 
   - "echo 'Building with static linking...' && mkdir build_static && cd build_static"
-  - "cmake -DBlueMars_BUILD_UNITTEST=TRUE -DBUILD_SHARED_LIBS=FALSE .."
+  - "cmake -DBlueMars_BUILD_UNITTEST=TRUE -DBlueMars_BUILD_2D_VISUALIZER=TRUE -DBUILD_SHARED_LIBS=FALSE .."
   - "make"
   - "./unittests"
   - "cd .. && echo '-------------------------------' && echo 'Building with dynamic linking...'  && mkdir build_dynamic && cd build_dynamic"
-  - "cmake -DBlueMars_BUILD_UNITTEST=TRUE -DBUILD_SHARED_LIBS=TRUE .."
+  - "cmake -DBlueMars_BUILD_UNITTEST=TRUE -DBlueMars_BUILD_2D_VISUALIZER=TRUE -DBUILD_SHARED_LIBS=TRUE .."
   - "make"
   - "./unittests"
 os:
