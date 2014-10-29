@@ -13,7 +13,7 @@ building a DLL on windows.
 	#if defined(BlueMars_EXPORTS)
 		#define  BlueMars_EXPORT __declspec(dllexport)
 	#else
-		#define  BlueMars_EXPORT __declspec(dllimport)
+		#define  BlueMars_EXPORT
 	#endif
 #else
 	#define BlueMars_EXPORT
