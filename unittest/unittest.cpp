@@ -11,9 +11,9 @@
 class NoisePublic : public Noise
 {
 public:
-	NoisePublic(long seed) : Noise(seed) {}
-	double discreteNoise(long x, long y, int octave) { return Noise::discreteNoise(x, y, octave); }
-	double interpolatedNoise(long x, long y, long waveLength = BASE_WAVE_LENGTH) { return Noise::interpolatedNoise(x, y, waveLength); }
+	NoisePublic(long pb_seed) : Noise(pb_seed) {}
+	long discreteNoise(long x, long y, int octave) { return Noise::discreteNoise(x, y, octave); }
+	double interpolatedNoise(long x, long y, int waveLength = BASE_WAVE_LENGTH) { return Noise::interpolatedNoise(x, y, waveLength); }
 	double cosineInterpolate(long X1, long X2, double Z1, double Z2, long x) { return Noise::cosineInterpolate(X1, X2, Z1, Z2, x); }
 };
 
@@ -66,7 +66,7 @@ TEST(PerlinTest, discreteNoise_Randomness)
 {
 	NoisePublic noise(456132);
 	long nb_floats = 1000 * 1000;
-	const double BUFSIZE = (double)nb_floats*sizeof(long);
+	const long BUFSIZE = (long)nb_floats*sizeof(long);
 	unsigned char *unComp = (unsigned char *)malloc((size_t)BUFSIZE);
 	long result;
 	for (int i = 0; i < 1000; i++)
@@ -77,18 +77,18 @@ TEST(PerlinTest, discreteNoise_Randomness)
 			memcpy(unComp + (i * 1000 + j)*sizeof(long), &result, sizeof(long));
 		}
 	}
-	unsigned char* comp = (unsigned char *)malloc((long)(1.1*BUFSIZE));
-	unsigned long cmp_len = compressBound((long)(BUFSIZE*1.1));
+	unsigned char* comp = (unsigned char *)malloc((long)(1.1*(double)BUFSIZE));
+	unsigned long cmp_len = compressBound((long)((double)BUFSIZE*1.1));
 	compress2(comp, &cmp_len, (const unsigned char *)unComp, (mz_ulong)BUFSIZE, 9);
 	double maxPrecision = (double)7 / 32 * 0.75; // Because we modulo by amplitude, result is only random on 7 bits out of the 32 of a long, we have also loss of information from aggregating x,y,seed to long, so we accept a loss of 75%
-	ASSERT_GT((float)cmp_len / BUFSIZE, maxPrecision);
+	ASSERT_GT((float)cmp_len / (float)BUFSIZE, maxPrecision);
 }
 
 TEST(PerlinTest, octaveTest)
 {
 	NoisePublic noise(1);
 	// First compute sum of both octave
-	double sumOct1 = 0, sumOct4 = 0;
+	long sumOct1 = 0, sumOct4 = 0;
 	for (int i = 0; i < 1000; i++)
 	{
 		for (int j = 0; j < 1000; j++)
@@ -101,13 +101,13 @@ TEST(PerlinTest, octaveTest)
 	sumOct4 = sumOct4 / (1000 * 1000);
 	ASSERT_GT(sumOct1, sumOct4);
 	// Then compute standard deviation
-	double sdOct1 = 0, sdOct4 = 0;
+	long sdOct1 = 0, sdOct4 = 0;
 	for (int i = 0; i < 1000; i++)
 	{
 		for (int j = 0; j < 1000; j++)
 		{
-			sdOct1 += pow(noise.discreteNoise(i, j, 1) - sumOct1, 2);
-			sdOct4 += pow(noise.discreteNoise(i, j, 4) - sumOct4, 2);
+			sdOct1 += (long)pow((double)(noise.discreteNoise(i, j, 1) - sumOct1), 2);
+			sdOct4 += (long)pow((double)(noise.discreteNoise(i, j, 4) - sumOct4), 2);
 		}
 	}
 	sdOct1 = sdOct1 / (1000 * 1000);

@@ -29,9 +29,9 @@ void BlueMarsMap::listchunks()
     }
 }
 
-int BlueMarsMap::nbChunks()
+unsigned long BlueMarsMap::nbChunks()
 {
-	int result=0;
+	unsigned long result=0;
 	for(auto it=layers.begin(); it!=layers.end(); ++it)
 	{
 		std::shared_ptr<BaseLayer> layer=it->second;
