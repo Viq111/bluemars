@@ -14,7 +14,7 @@ class BlueMarsMap
   void addLayer(std::string, std::shared_ptr<BaseLayer>);
   float get(std::string, long, long);
   void listchunks();
-  int nbChunks();
+  unsigned long nbChunks();
  private:
   std::map <std::string, std::shared_ptr<BaseLayer> > layers;
 };
