@@ -10,11 +10,10 @@ std::shared_ptr<ChunkData> simpleAdditionLayer::preGenerateChunk(int chunk_x, in
 		for (int i_y = 0; i_y < chunkSize; ++i_y)
 		{
 			long in_chunk_coordinates = i_x * chunkSize + i_y;
-			chunk->data[in_chunk_coordinates] = (float) i_x+i_y;
+			chunk->data[in_chunk_coordinates] = (float) (i_x+i_y);
 		}
 	}
 	return std::shared_ptr<ChunkData>(chunk);
 }
 
 simpleAdditionLayer::simpleAdditionLayer(){}
-

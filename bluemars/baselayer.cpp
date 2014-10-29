@@ -12,8 +12,8 @@ BaseLayer::BaseLayer()
 
 float BaseLayer::get(long x, long y)
 {
-	int chunk_x = floor(x * 1.0f / chunkSize);
-	int chunk_y = floor(y * 1.0f / chunkSize);
+	int chunk_x = (int)floor((float)x/ chunkSize);
+	int chunk_y = (int)floor((float)y/ chunkSize);
 	float value;
 	std::pair<int, int> chunk_coordinates = std::make_pair(chunk_x, chunk_y);
 	long in_chunk_coordinates = (mod(x, chunkSize)) * chunkSize + mod(y, chunkSize);
@@ -40,7 +40,7 @@ void BaseLayer::listchunks()
 	}
 }
 
-unsigned int BaseLayer::nbChunks()
+unsigned long BaseLayer::nbChunks()
 {
-	return chunk_map.size();
+	return (unsigned long)chunk_map.size();
 }
