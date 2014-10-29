@@ -15,7 +15,6 @@ class Noise
 public:
     Noise(long seed);
 	double outputValue(long x, long y, int octaves);
-    void generateOutputFile(long size, int numberOfOctaves); // ToDo - Remove, debug only
 
 protected:
     long seed;

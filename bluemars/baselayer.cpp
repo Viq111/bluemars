@@ -42,5 +42,5 @@ void BaseLayer::listchunks()
 
 unsigned long BaseLayer::nbChunks()
 {
-	return chunk_map.size();
+	return (unsigned long)chunk_map.size();
 }

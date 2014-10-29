@@ -95,25 +95,3 @@ double Noise::outputValue(long x, long y, int numberOfOctaves = 8) //l'octave 0 
     return result;
 }
 
-void Noise::generateOutputFile(long size, int numberOfOctaves)
-{
-    FILE* perlinOutputFile = NULL;
-    perlinOutputFile = fopen("perlinOutputFile.txt", "w+");
-    if (perlinOutputFile != NULL)
-    {
-		for (long x = 0; x < size; x++)
-        {
-			for (long y = 0; y < size; y++)
-            {
-                double z = outputValue(x,y,numberOfOctaves);
-                fprintf(perlinOutputFile, "%ld;%ld;%f\n", x,y,z);
-            }
-        }
-
-        fclose(perlinOutputFile);
-    }
-    else
-    {
-        printf("Impossible d'ouvrir le fichier");
-    }
-}
