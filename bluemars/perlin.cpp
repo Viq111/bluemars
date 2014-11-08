@@ -84,6 +84,11 @@ double Noise::interpolatedNoise(long x, long y, int octave)
     return (cosineInterpolate(Y1,Y2,Z1,Z2,y));
 }
 
+double Noise::outputValue(long x, long y)
+{
+	return outputValue(x, y, 8);
+}
+
 double Noise::outputValue(long x, long y, int numberOfOctaves = 8) //l'octave 0 correspondant à BASE_AMPLITUDE et BASE_WAVE_LENGTH compte comme une octave
 {
     double result = 0;
@@ -94,4 +99,3 @@ double Noise::outputValue(long x, long y, int numberOfOctaves = 8) //l'octave 0 
 	result /= (2 * BASE_AMPLITUDE); // So we are sure we have values between 0 and 1
     return result;
 }
-

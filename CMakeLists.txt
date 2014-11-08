@@ -70,6 +70,8 @@ bluemars/perlin.h
 bluemars/perlin.cpp
 bluemars/simpleAdditionLayer.h
 bluemars/simpleAdditionLayer.cpp
+bluemars/elevation.h
+bluemars/elevation.cpp
 )
 
 IF( BlueMars_BUILD_2D_VISUALIZER )
