@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <math.h>
 
 std::vector<unsigned char> chunk2TGA(std::shared_ptr<ChunkData> chunk, short width, short height)
 {
