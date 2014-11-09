@@ -17,28 +17,28 @@ std::vector<unsigned char> chunk2TGA(std::shared_ptr<ChunkData> chunk, short wid
 	out.push_back(0);	out.push_back(0);	/* X origin */
 	out.push_back(0);	out.push_back(0);	/* y origin */
 	// Write sizes - See http://paulbourke.net/dataformats/tga/
-	out.push_back((width & 0x00FF));
-	out.push_back((width & 0xFF00) / 256);
-	out.push_back((height & 0x00FF));
-	out.push_back((height & 0xFF00) / 256);
+	out.push_back((unsigned char)(width & 0x00FF));
+	out.push_back((unsigned char)((width & 0xFF00) / 256));
+	out.push_back((unsigned char)(height & 0x00FF));
+	out.push_back((unsigned char)((height & 0xFF00) / 256));
 	out.push_back(24);						/* 24 bits bitmap */
 	out.push_back(0);
 
 	// Write chunk
 	for (long i = 0; i<height*width; i++)
 	{
-		int data = round(chunk->data.at(i) * 255);
+		int data = static_cast<int>(round(chunk->data.at(i) * 255));
 		// B > G > R
-		out.push_back(data);
-		out.push_back(data);
-		out.push_back(data);
+		out.push_back((unsigned char)data);
+		out.push_back((unsigned char)data);
+		out.push_back((unsigned char)data);
 	}
 	return out;
 }
 void writeTGA2File(std::string filename, std::vector<unsigned char> tga_data)
 {
 	std::ofstream file(filename, std::ios::out | std::ios::binary);
-	for (long i = 0; i < tga_data.size(); i++)
+	for (unsigned long i = 0; i < tga_data.size(); i++)
 	{
 		file.put(tga_data.at(i));
 	}
@@ -101,8 +101,8 @@ void LayerWindow::update()
 	auto alloc = mainCanvas->GetAllocation();
 	currentLowerRight.x = currentUpperLeft.x + (long)round(alloc.width);
 	currentLowerRight.y = currentUpperLeft.y + (long)round(alloc.height);
-	std::pair<int, int> upperLeftChunk = std::make_pair<int, int>(floor((double)currentUpperLeft.x / layer->chunkSize), floor((double)currentUpperLeft.y / layer->chunkSize));
-	std::pair<int, int> lowerRightChunk = std::make_pair<int, int>(floor((double)currentLowerRight.x / layer->chunkSize), floor((double)currentLowerRight.y / layer->chunkSize));
+	std::pair<int, int> upperLeftChunk = std::make_pair<int, int>(static_cast<int>(floor((double)currentUpperLeft.x / layer->chunkSize)), static_cast<int>(floor((double)currentUpperLeft.y / layer->chunkSize)));
+	std::pair<int, int> lowerRightChunk = std::make_pair<int, int>(static_cast<int>(floor((double)currentLowerRight.x / layer->chunkSize)), static_cast<int>(floor((double)currentLowerRight.y / layer->chunkSize)));
 	
 	// 1 - Unload unused chunk (Too far)
 	{
@@ -157,7 +157,7 @@ void LayerWindow::update()
 	{
 		long posX = (*it)->chunk_x * layer->chunkSize - currentUpperLeft.x;
 		long posY = (*it)->chunk_y * layer->chunkSize - currentUpperLeft.y;
-		(*it)->sprite.setPosition(sf::Vector2f(posX, posY));
+		(*it)->sprite.setPosition(sf::Vector2f(static_cast<float>(posX), static_cast<float>(posY)));
 		mainCanvas->Draw((*it)->sprite);
 	}
 	mainCanvas->Display();
