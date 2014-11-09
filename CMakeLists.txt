@@ -6,8 +6,10 @@ SET( BlueMars_MAJOR_VERSION 0 )
 SET( BlueMars_MINOR_VERSION 1 )
 SET( BlueMars_REVISION_VERSION 0 )
 
+FIND_PACKAGE(Threads REQUIRED)
+
 IF ( CMAKE_COMPILER_IS_GNUCXX )
-	SET( CMAKE_CXX_FLAGS "-std=c++11 -Wall -Wextra -Wshadow -Wconversion -Wno-long-long -pedantic ${CMAKE_CXX_FLAGS}" )
+	SET( CMAKE_CXX_FLAGS "-std=c++11 -Wall -Wextra -Wshadow -Wconversion -Wno-long-long -pedantic ${CMAKE_CXX_FLAGS} ${CMAKE_THREAD_LIBS_INIT}" )
 ENDIF()
 
 # Give the user the possibility to enable/disable modules
@@ -59,7 +61,7 @@ IF( BlueMars_BUILD_UNITTEST )
 ENDIF()
 
 # Sources
-SET( BLUEMARS_SOURCE_FILES 
+SET( BLUEMARS_SOURCE_FILES
 bluemars/bluemars.h
 bluemars/bluemars.cpp
 bluemars/baselayer.h

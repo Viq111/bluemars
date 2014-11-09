@@ -6,6 +6,7 @@
 #include "perlin.h"
 #include "miniz.c"
 #include "elevation.h"
+#include <fstream>
 
 // Protected to public for unit testing
 // Perlin Noise
@@ -20,7 +21,7 @@ public:
 
 // Perlin Noise Testing
 
-TEST(PerlinTest, murmurHash_determisn)
+TEST(PerlinTest, murmurHash_determinism)
 {
 	EXPECT_EQ(murmurHash2(5), murmurHash2(5)); // Check if we always have the same output
 }
@@ -227,34 +228,12 @@ TEST(BlueMarsTest, NBChunks)
 	map.get("simpleAdditionLayer", -1000, -1000);
 }
 
-// TEST(ElevationLayerTest, Randomness)
-// {
-// 	BlueMarsMap map;
-// 	map.addLayer("elevation", std::make_shared<elevation> (elevation()));
-// 	//float value = map.get("elevation", 0, 0);
-// 	long nb_floats = 1024*1024;
-// 	const double BUFSIZE = (double)nb_floats*sizeof(float);
-// 	unsigned char *unComp = (unsigned char *)malloc((size_t)BUFSIZE);
-// 	float value;
-// 	for(long x; x<1024; ++x)
-// 		{
-// 			for(long y; y<1024; ++y)
-// 				{
-// 					value = map.get("elevation", x, y);
-// 					memcpy(unComp + x*1024+y*sizeof(float), &value, sizeof(float));
-// 				}
-// 		}
-// 	unsigned char* comp = (unsigned char *)malloc((long)(1.1*BUFSIZE));
-// 	unsigned long cmp_len = compressBound((long)(BUFSIZE*1.1));
-// 	compress2(comp, &cmp_len, (const unsigned char *)unComp, (mz_ulong)BUFSIZE, 9);
-// 	ASSERT_GT((float)cmp_len / BUFSIZE, 2);
-// }
 TEST(ElevationTest, Determinist)
 {
 	BlueMarsMap map;
 	map.addLayer("elevation", std::make_shared<elevation> (elevation()));
 	EXPECT_EQ(map.get("elevation",0,0), map.get("elevation",0,0));
-	EXPECT_EQ(map.get("elevation",100,100), map.get("elevation",100,100));
+	EXPECT_EQ(map.get("elevation",1000,100), map.get("elevation",1000,100));
 	EXPECT_EQ(map.get("elevation",-2048,2048), map.get("elevation",-2048,2048));
 }
 
@@ -292,4 +271,5 @@ TEST(ElevationTest, MinValue)
 					}
 			}
 	ASSERT_GE(minValue,0);
+	ASSERT_EQ(map.nbChunks(),1);
 }
