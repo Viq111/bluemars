@@ -1,5 +1,6 @@
 #include <SFGUI/SFGUI.hpp>
 #include <SFML/Graphics.hpp>
+#include "2dvisualizer.h"
 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;

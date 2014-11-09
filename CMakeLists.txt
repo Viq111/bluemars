@@ -80,6 +80,8 @@ IF( BlueMars_BUILD_2D_VISUALIZER )
 	SET( 2DVISUALIZER_SOURCE_FILES
 	2dvisualizer/2dvisualizer.h
 	2dvisualizer/2dvisualizer.cpp
+	2dvisualizer/layerVisualizer.h
+	2dvisualizer/layerVisualizer.cpp
 	)
 ENDIF()
 
