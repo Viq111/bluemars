@@ -50,7 +50,9 @@ LayerWindow::LayerWindow(std::shared_ptr<BaseLayer>, std::string name, std::shar
 	layerName = name;
 	parent = p;
 	isScrolling = false;
-	startingXY.x = 0; startingXY.y = 0;
+	startingXY = { 0, 0 };
+	currentUpperLeft = {0, 0}; 
+	startingUpperLeft = { 0, 0 };
 	mainWindow = sfg::Window::Create();
 	mainWindow->SetTitle(layerName);
 	mainCanvas = sfg::Canvas::Create();
@@ -68,6 +70,7 @@ void LayerWindow::onStartScroll()
 	auto mousePos = static_cast<sf::Vector2<float>>(sf::Mouse::getPosition(*parent.get()));
 	auto canvasPos = mainCanvas->GetAbsolutePosition();
 	startingXY = mousePos - canvasPos;
+	startingUpperLeft = currentUpperLeft;
 }
 void LayerWindow::onStopScroll()
 {
@@ -81,6 +84,7 @@ void LayerWindow::onScroll()
 		auto mousePos = static_cast<sf::Vector2<float>>(sf::Mouse::getPosition(*parent.get()));
 		auto canvasPos = mainCanvas->GetAbsolutePosition();
 		auto movedPos = (mousePos - canvasPos) - startingXY;
+		currentUpperLeft = startingUpperLeft - static_cast<sf::Vector2<long>>(movedPos);
 	}
 	//std::cout << "Moving" << std::endl;
 }

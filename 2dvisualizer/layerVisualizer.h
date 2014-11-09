@@ -26,6 +26,8 @@ protected:
 	std::shared_ptr<sf::RenderWindow> parent;
 	bool isScrolling; // Whether or not the user is scrolling the image
 	sf::Vector2<float> startingXY; // Where the user started scrolling
+	sf::Vector2<long> startingUpperLeft;
+	sf::Vector2<long> currentUpperLeft; // The current inWorld coordinate of the upper left corner
 
 };
 
