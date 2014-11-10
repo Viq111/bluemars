@@ -54,7 +54,7 @@ double Noise::cosineInterpolate(long X1, long X2, double Z1, double Z2, long x) 
     }
     else
     {
-		double normerX = (double)(((-x) / (X2 - X1)) + ((double)X1 / (double)(X2 - X1)));//norme x entre 0 et 1 (renvoie 0 si x vaut z1, 1 si x vaut z2)
+		double normerX = (double)((((double)-x) / (X2 - X1)) + ((double)X1 / (double)(X2 - X1)));//norme x entre 0 et 1 (renvoie 0 si x vaut z1, 1 si x vaut z2)
 		double f = 0.5*(1 - cos(normerX*M_PI));
         return (Z1*(1-f) + Z2*f);
     }
