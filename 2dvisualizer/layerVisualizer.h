@@ -20,20 +20,20 @@ public:
 	sf::Sprite sprite;
 };
 
-class LayerWindow // A scrollable widget linked to a layer
+class LayerWindow : public sfg::Window // A scrollable widget linked to a layer
 {
 public:
-	LayerWindow(std::shared_ptr<BaseLayer> layer, std::string layerName, std::shared_ptr<sf::RenderWindow> parent); // RenderWindow is needed for mouse position
+	typedef std::shared_ptr<LayerWindow> Ptr;
+	static Ptr Create(std::shared_ptr<BaseLayer> layer, std::string layerName, std::shared_ptr<sf::RenderWindow> parent);
 	void onStartScroll();
 	void onStopScroll();
 	void onScroll();
 	void onResize();
-	void update(); // Compute and load which chunk are currently visible in the window
-	sfg::Window::Ptr getWindow();
+	LayerWindow();
 protected:
+	void update(); // Called every frame, check if dirty and redraw if that's the case
 	std::string layerName;
 	std::shared_ptr<BaseLayer> layer;
-	sfg::Window::Ptr mainWindow;
 	sfg::Canvas::Ptr mainCanvas;
 	std::shared_ptr<sf::RenderWindow> parent;
 	bool isScrolling; // Whether or not the user is scrolling the image

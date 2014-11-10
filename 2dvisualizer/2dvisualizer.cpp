@@ -9,11 +9,12 @@ void MainWindow::main() {
 
 	// Create a window for simpleAdditionLayer
 	std::shared_ptr<simpleAdditionLayer> sa_layer = std::make_shared<simpleAdditionLayer>(simpleAdditionLayer());
-	LayerWindow sa_window(sa_layer, "simpleAdditionLayer", render_window);
+	//LayerWindow sa_window(sa_layer, "simpleAdditionLayer", render_window);
+	auto sa_window = LayerWindow::Create(sa_layer, "simpleAdditionLayer", render_window);
 
 	// Create a desktop and add the window to it.
 	sfg::Desktop desktop;
-	desktop.Add(sa_window.getWindow());
+	desktop.Add(sa_window);
 
 	// We're not using SFML to render anything in this program, so reset OpenGL
 	// states. Otherwise we wouldn't see anything.

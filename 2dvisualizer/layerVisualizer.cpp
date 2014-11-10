@@ -51,28 +51,30 @@ void writeTGA2File(std::string filename, std::vector<unsigned char> tga_data)
 	file.close();
 }
 
-LayerWindow::LayerWindow(std::shared_ptr<BaseLayer> l, std::string name, std::shared_ptr<sf::RenderWindow> p)
-{
-	layerName = name;
-	layer = l;
-	parent = p;
-	isScrolling = false;
-	startingXY = { 0, 0 };
-	currentUpperLeft = {0, 0}; 
-	startingUpperLeft = { 0, 0 };
-	mainWindow = sfg::Window::Create();
-	mainWindow->SetTitle(layerName);
-	mainCanvas = sfg::Canvas::Create();
-	mainCanvas->SetRequisition(sf::Vector2f(200, 200));
-	mainWindow->Add(mainCanvas);
-	mainCanvas->GetSignal(sfg::Widget::OnMouseLeftPress).Connect(std::bind(&LayerWindow::onStartScroll, this));
-	mainCanvas->GetSignal(sfg::Widget::OnMouseLeftRelease).Connect(std::bind(&LayerWindow::onStopScroll, this));
-	mainCanvas->GetSignal(sfg::Widget::OnMouseLeave).Connect(std::bind(&LayerWindow::onStopScroll, this));
-	mainCanvas->GetSignal(sfg::Widget::OnMouseMove).Connect(std::bind(&LayerWindow::onScroll, this));
-	mainWindow->GetSignal(sfg::Widget::OnSizeAllocate).Connect(std::bind(&LayerWindow::onResize, this));
-	update();
-}
+LayerWindow::LayerWindow() : sfg::Window((uint8_t)'\a') {}
 
+LayerWindow::Ptr LayerWindow::Create(std::shared_ptr<BaseLayer> l, std::string name, std::shared_ptr<sf::RenderWindow> p)
+{
+	auto ptr = std::make_shared<LayerWindow>();
+	ptr->layerName = name;
+	ptr->layer = l;
+	ptr->parent = p;
+	ptr->isScrolling = false;
+	ptr->startingXY = { 0, 0 };
+	ptr->currentUpperLeft = { 0, 0 };
+	ptr->startingUpperLeft = { 0, 0 };
+	ptr->SetTitle(name);
+	ptr->mainCanvas = sfg::Canvas::Create();
+	ptr->mainCanvas->SetRequisition(sf::Vector2f(200, 200));
+	ptr->Add(ptr->mainCanvas);
+	ptr->mainCanvas->GetSignal(sfg::Widget::OnMouseLeftPress).Connect(std::bind(&LayerWindow::onStartScroll, ptr));
+	ptr->mainCanvas->GetSignal(sfg::Widget::OnMouseLeftRelease).Connect(std::bind(&LayerWindow::onStopScroll, ptr));
+	ptr->mainCanvas->GetSignal(sfg::Widget::OnMouseLeave).Connect(std::bind(&LayerWindow::onStopScroll, ptr));
+	ptr->mainCanvas->GetSignal(sfg::Widget::OnMouseMove).Connect(std::bind(&LayerWindow::onScroll, ptr));
+	ptr->GetSignal(sfg::Widget::OnSizeAllocate).Connect(std::bind(&LayerWindow::onResize, ptr));
+	ptr->update();
+	return ptr;
+}
 void LayerWindow::onStartScroll()
 {
 	isScrolling = true;
@@ -96,7 +98,6 @@ void LayerWindow::onScroll()
 		currentUpperLeft = startingUpperLeft - static_cast<sf::Vector2<long>>(movedPos);
 		update();
 	}
-	//std::cout << "Moving" << std::endl;
 }
 void LayerWindow::onResize()
 {
@@ -109,7 +110,7 @@ void LayerWindow::update()
 	currentLowerRight.y = currentUpperLeft.y + (long)round(alloc.height);
 	std::pair<int, int> upperLeftChunk = std::make_pair<int, int>(static_cast<int>(floor((double)currentUpperLeft.x / layer->chunkSize)), static_cast<int>(floor((double)currentUpperLeft.y / layer->chunkSize)));
 	std::pair<int, int> lowerRightChunk = std::make_pair<int, int>(static_cast<int>(floor((double)currentLowerRight.x / layer->chunkSize)), static_cast<int>(floor((double)currentLowerRight.y / layer->chunkSize)));
-	
+
 	// 1 - Unload unused chunk (Too far)
 	{
 		auto it = chunk_sprites.begin();
@@ -127,14 +128,14 @@ void LayerWindow::update()
 			}
 		}
 	}
-	
+
 	// For each chunk in the visible box
 	for (int i = upperLeftChunk.first; i <= lowerRightChunk.first; i++)
 	{
 		for (int j = upperLeftChunk.second; j <= lowerRightChunk.second; j++)
 		{
 			layer->get(i * layer->chunkSize, j * layer->chunkSize); // For each chunk, be sure they are generated
-			
+
 			// 2 - Load needed chunk
 			bool toLoad = true;
 			for (auto it = chunk_sprites.begin(); it != chunk_sprites.end(); it++) // Check if the sprite is already loaded
@@ -151,10 +152,10 @@ void LayerWindow::update()
 				chunk_sprites.push_back(ptr);
 				std::cout << "Loading chunk " << i << ";" << j << std::endl;
 			}
-			
+
 		}
 	}
-	
+
 	mainCanvas->Bind();
 	mainCanvas->Clear(sf::Color(255, 0, 0, 0), true);
 
@@ -168,14 +169,7 @@ void LayerWindow::update()
 	}
 	mainCanvas->Display();
 	mainCanvas->Unbind();
-	
 }
-
-sfg::Window::Ptr LayerWindow::getWindow()
-{
-	return mainWindow;
-}
-
 
 // ChunkSprite
 ChunkSprite::ChunkSprite(std::shared_ptr<BaseLayer> layer, int cx, int cy)
