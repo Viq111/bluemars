@@ -1,7 +1,9 @@
-#include "elevation.h"
+#include "elevationlayer.h"
 #include "perlin.h"
 
-std::shared_ptr<ChunkData> elevation::preGenerateChunk(int chunk_x, int chunk_y)
+ElevationLayer::ElevationLayer(){}
+
+std::shared_ptr<ChunkData> ElevationLayer::preGenerateChunk(int chunk_x, int chunk_y)
 {
 	ChunkData* chunk = new ChunkData(chunkSize);
 	chunk->chunk_x = chunk_x;
@@ -21,5 +23,3 @@ std::shared_ptr<ChunkData> elevation::preGenerateChunk(int chunk_x, int chunk_y)
 	}
 	return std::shared_ptr<ChunkData>(chunk);
 }
-
-elevation::elevation(){}

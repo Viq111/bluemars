@@ -6,10 +6,10 @@
 #include "baselayer.h"
 #include "chunkdata.h"
 
-class elevation: public BaseLayer
+class ElevationLayer: public BaseLayer
 {
 public:
-	elevation();
+	ElevationLayer();
 	std::shared_ptr<ChunkData> preGenerateChunk(int chunk_x, int chunk_y);
 
 };
