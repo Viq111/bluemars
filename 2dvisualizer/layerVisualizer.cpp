@@ -71,7 +71,9 @@ LayerWindow::Ptr LayerWindow::Create(std::shared_ptr<BaseLayer> l, std::string n
 	ptr->mainCanvas->GetSignal(sfg::Widget::OnMouseLeftRelease).Connect(std::bind(&LayerWindow::onStopScroll, ptr));
 	ptr->mainCanvas->GetSignal(sfg::Widget::OnMouseLeave).Connect(std::bind(&LayerWindow::onStopScroll, ptr));
 	ptr->mainCanvas->GetSignal(sfg::Widget::OnMouseMove).Connect(std::bind(&LayerWindow::onScroll, ptr));
-	ptr->GetSignal(sfg::Widget::OnSizeAllocate).Connect(std::bind(&LayerWindow::onResize, ptr));
+	//ptr->GetSignal(sfg::Widget::OnSizeAllocate).Connect(std::bind(&LayerWindow::onResize, ptr));
+	// Instead of computing on every resize, only recompute when resize is done (user release the mouse)
+	ptr->GetSignal(sfg::Widget::OnMouseLeftRelease).Connect(std::bind(&LayerWindow::onResize, ptr));
 	ptr->update();
 	return ptr;
 }
