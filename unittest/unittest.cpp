@@ -252,7 +252,7 @@ TEST(BlueMarsTest, NBChunks)
 TEST(ElevationTest, Determinist)
 {
 	BlueMarsMap map;
-	map.addLayer("elevation", std::make_shared<ElevationLayer>());
+	map.addLayer("elevation", std::make_shared<ElevationLayer>(5));
 	EXPECT_EQ(map.get("elevation",0,0), map.get("elevation",0,0));
 	EXPECT_EQ(map.get("elevation",100,100), map.get("elevation",100,100));
 	EXPECT_EQ(map.get("elevation",-2048,2048), map.get("elevation",-2048,2048));
@@ -261,7 +261,7 @@ TEST(ElevationTest, Determinist)
 TEST(ElevationTest, MaxValue)
 {
 	BlueMarsMap map;
-	map.addLayer("elevation", std::make_shared<ElevationLayer>());
+	map.addLayer("elevation", std::make_shared<ElevationLayer>(5));
 	float maxValue = 0;
 	float value = 0;
 	for(long x=0; x<1024; ++x)
@@ -279,7 +279,7 @@ TEST(ElevationTest, MaxValue)
 TEST(ElevationTest, MinValue)
 {
 	BlueMarsMap map;
-	map.addLayer("elevation", std::make_shared<ElevationLayer>());
+	map.addLayer("elevation", std::make_shared<ElevationLayer>(5));
 	float minValue = 0;
 	float value = 0;
 	for(long x=0; x<1024; ++x)

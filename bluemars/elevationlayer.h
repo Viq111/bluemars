@@ -1,17 +1,18 @@
-#ifndef INCLUDE_elevation
-#define INCLUDE_elevation
+#ifndef INCLUDE_ELEVATION_LAYER
+#define INCLUDE_ELEVATION_LAYER
 
-#include <string>
-#include <iostream>
 #include "baselayer.h"
 #include "chunkdata.h"
+#include "perlin.h"
 
 class ElevationLayer: public BaseLayer
 {
 public:
-	ElevationLayer();
+	ElevationLayer(long seed);
 	std::shared_ptr<ChunkData> preGenerateChunk(int chunk_x, int chunk_y);
-
+protected:
+	long seed;
+	Noise noiseInstance;
 };
 
 #endif
