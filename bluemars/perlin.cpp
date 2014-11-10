@@ -62,11 +62,13 @@ double Noise::cosineInterpolate(long X1, long X2, double Z1, double Z2, long x) 
 
 double Noise::interpolatedNoise(long x, long y, int octave)
 {
-	long waveLength = static_cast<long>(1.0f * BASE_WAVE_LENGTH / pow(2, (double)octave));
+	long waveLength = static_cast<long>(round(BASE_WAVE_LENGTH / pow(2, octave)));
+	if (waveLength <= 0) { waveLength = 1; } // We can't have a waveLenght lower than 0
+
     //on détermine les quatre points les plus proches de (x,y) et entre lesquels il faut faire l'interpolation :(X1,Y1), (X1,Y2), (X2,Y1), (X2,Y2)
-    long X1 = static_cast<long>(floor((double)(x / waveLength)) * (double)waveLength);
+	long X1 = static_cast<long>(floor(((double)x) / waveLength) * (double)waveLength);
     long X2 = X1 + waveLength;
-	long Y1 = static_cast<long>(floor((double)(y / waveLength)) * (double)waveLength);
+	long Y1 = static_cast<long>(floor(((double)y) / waveLength) * (double)waveLength);
     long Y2 = Y1 + waveLength;
 
     //on calcule la valeur du bruit aux quatre points
