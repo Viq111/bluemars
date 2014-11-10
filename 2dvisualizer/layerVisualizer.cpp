@@ -25,13 +25,19 @@ std::vector<unsigned char> chunk2TGA(std::shared_ptr<ChunkData> chunk, short wid
 	out.push_back(0);
 
 	// Write chunk
-	for (long i = 0; i<height*width; i++)
+	for (long y = 0; y < height; y++)
 	{
-		int data = static_cast<int>(round(chunk->data.at(i) * 255));
-		// B > G > R
-		out.push_back((unsigned char)data);
-		out.push_back((unsigned char)data);
-		out.push_back((unsigned char)data);
+		for (long x = 0; x < width; x++)
+		{
+			// In TGA, origin is lower left and we need upper left, so we search at j and set at i
+			//long i = y * width + x;
+			long j = (height - y - 1) * width + x;
+			int data = static_cast<int>(round(chunk->data.at(j) * 255));
+			// B > G > R
+			out.push_back((unsigned char)data);
+			out.push_back((unsigned char)data);
+			out.push_back((unsigned char)data);
+		}
 	}
 	return out;
 }
