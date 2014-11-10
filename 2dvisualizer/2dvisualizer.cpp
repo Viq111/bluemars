@@ -5,6 +5,7 @@
 void MainWindow::main() {
 	// Create SFML's window.
 	auto render_window = std::make_shared<sf::RenderWindow>(sf::VideoMode( SCREEN_WIDTH, SCREEN_HEIGHT ), "BlueMars 2D Visualizer" );
+	render_window->setVerticalSyncEnabled(true); // Enable vsync to stop hogging CPU
 
 	/*
 	// Create a simpleAdditionLayer
