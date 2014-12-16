@@ -3,10 +3,11 @@
 
 #include <string>
 #include <iostream>
+#include "windowsSpecific.h"
 #include "baselayer.h"
 #include "chunkdata.h"
 
-class simpleAdditionLayer: public BaseLayer
+class BlueMars_EXPORT simpleAdditionLayer : public BaseLayer
 {
 public:
 	simpleAdditionLayer();

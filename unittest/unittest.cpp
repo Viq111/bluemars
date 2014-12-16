@@ -187,21 +187,21 @@ TEST(BlueMarsTest, KnownCoord)
 	BlueMarsMap map;
 	map.addLayer("simpleAdditionLayer", std::make_shared<simpleAdditionLayer> (simpleAdditionLayer()));
 	float value = map.get("simpleAdditionLayer", 0, 0);
-	ASSERT_EQ(value,0); // 0+0
+	ASSERT_EQ(value,0);
 	value = map.get("simpleAdditionLayer", 10, 10);
-	ASSERT_EQ(value,20); //10+10
+	EXPECT_NEAR(value, 0.00976563, 0.0001);
 	value = map.get("simpleAdditionLayer", 2000, 2000);
-	ASSERT_EQ(value,1952);
+	EXPECT_NEAR(value, 0.953125, 0.0001);
 	value = map.get("simpleAdditionLayer",1000,2000);
-	ASSERT_EQ(value,1976);
+	EXPECT_NEAR(value, 0.964844, 0.0001);
 	value = map.get("simpleAdditionLayer", -10, 5);
-	ASSERT_EQ(value, 1019);
+	EXPECT_NEAR(value, 0.497559, 0.0001);
 	value = map.get("simpleAdditionLayer", -10, -10);
-	ASSERT_EQ(value, 2028);
+	EXPECT_NEAR(value, 0.990234, 0.0001);
 	value = map.get("simpleAdditionLayer", -2000, -2000);
-	ASSERT_EQ(value,96);
+	EXPECT_NEAR(value, 0.046875, 0.0001);
 	value = map.get("simpleAdditionLayer", 2000, -2000);
-	ASSERT_EQ(value,1024);
+	EXPECT_NEAR(value, 0.5, 0.0001);
 }
 
 TEST(BlueMarsTest, NBChunks)

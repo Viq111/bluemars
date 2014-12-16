@@ -41,7 +41,10 @@ ENDIF()
 # Find dependancies
 ## For 2D Viz
 IF( BlueMars_BUILD_2D_VISUALIZER )
+	FIND_PACKAGE( SFML 2 COMPONENTS system window graphics audio REQUIRED )
 	FIND_PACKAGE( SFGUI REQUIRED )
+	INCLUDE_DIRECTORIES( ${SFGUI_INCLUDE_DIR} )
+	INCLUDE_DIRECTORIES( ${SFML_INCLUDE_DIR} )
 ENDIF()
 ## For unittest
 IF( BlueMars_BUILD_UNITTEST )
@@ -70,10 +73,15 @@ bluemars/perlin.h
 bluemars/perlin.cpp
 bluemars/simpleAdditionLayer.h
 bluemars/simpleAdditionLayer.cpp
+bluemars/windowsSpecific.h
 )
 
 IF( BlueMars_BUILD_2D_VISUALIZER )
 	SET( 2DVISUALIZER_SOURCE_FILES
+	2dvisualizer/2dvisualizer.h
+	2dvisualizer/2dvisualizer.cpp
+	2dvisualizer/layerVisualizer.h
+	2dvisualizer/layerVisualizer.cpp
 	)
 ENDIF()
 
@@ -87,11 +95,20 @@ ENDIF()
 IF ( BUILD_SHARED_LIBS )
 	ADD_LIBRARY(BlueMars SHARED ${BLUEMARS_SOURCE_FILES} )
 ELSE()
-	ADD_LIBRARY(BlueMars ${BLUEMARS_SOURCE_FILES} )
+	ADD_LIBRARY(BlueMars STATIC ${BLUEMARS_SOURCE_FILES} )
 ENDIF()
 
 IF ( BlueMars_BUILD_2D_VISUALIZER )
+	IF ( BUILD_SHARED_LIBS )
+		SET( SFGUI_BUILD_SHARED_LIBS true BOOL "Build SFGUI Shared" )
+		SET( GLEW_STATIC false BOOL "Build GLEW Shared" )
+	ELSE()
+		SET( SFGUI_BUILD_SHARED_LIBS false BOOL "Build SFGUI Shared" )
+		SET( GLEW_STATIC true BOOL "Build GLEW Shared" )
+	ENDIF()
 	ADD_EXECUTABLE( BlueMars2DVisualizer ${2DVISUALIZER_SOURCE_FILES} )
+	TARGET_LINK_LIBRARIES( BlueMars2DVisualizer ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${OPENGL_glu_LIBRARY} ${OPENGL_gl_LIBRARY} ${SFGUI_LIBRARY})
+	TARGET_LINK_LIBRARIES( BlueMars2DVisualizer BlueMars )
 ENDIF()
 
 IF ( BlueMars_BUILD_UNITTEST )
