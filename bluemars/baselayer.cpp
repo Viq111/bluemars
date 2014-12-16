@@ -44,3 +44,9 @@ unsigned long BaseLayer::nbChunks()
 {
 	return (unsigned long)chunk_map.size();
 }
+
+std::shared_ptr<ChunkData> BaseLayer::getChunk(int chunk_x, int chunk_y)
+{
+	std::pair<int, int> chunk_coordinates = std::make_pair(chunk_x, chunk_y);
+	return chunk_map.at(chunk_coordinates);
+}

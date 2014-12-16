@@ -2,15 +2,16 @@
 #define INCLUDE_PERLIN
 
 #include <random>
+#include <windowsSpecific.h>
 
 #define BASE_WAVE_LENGTH 128
 #define BASE_AMPLITUDE 256
 #define PERSISTENCE 0.5 //coeff par lequel on multiplie l'amplitude à chaque octave (à chaque fois que la frequence double)
 #define MAX_SEED 1317624576693539401 // This is long_max / 7
 
-long murmurHash2(long seed);
+long BlueMars_EXPORT murmurHash2(long seed);
 
-class Noise
+class BlueMars_EXPORT Noise
 {
 public:
     Noise(long seed);
