@@ -1,7 +1,7 @@
 #ifndef INCLUDE_2DVISUALIZER
 #define INCLUDE_2DVISUALIZER
 #include "layerVisualizer.h"
-#include "simpleAdditionLayer.h"
+#include "elevationLayer.h"
 
 // Default window
 const int SCREEN_WIDTH = 800;

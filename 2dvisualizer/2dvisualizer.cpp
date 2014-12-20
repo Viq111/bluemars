@@ -7,10 +7,10 @@ void MainWindow::main() {
 	auto render_window = std::make_shared<sf::RenderWindow>(sf::VideoMode( SCREEN_WIDTH, SCREEN_HEIGHT ), "BlueMars 2D Visualizer" );
 	render_window->setVerticalSyncEnabled(true); // Enable vsync to stop hogging CPU
 
-	// Create a window for simpleAdditionLayer
-	std::shared_ptr<simpleAdditionLayer> sa_layer = std::make_shared<simpleAdditionLayer>(simpleAdditionLayer());
-	//LayerWindow sa_window(sa_layer, "simpleAdditionLayer", render_window);
-	auto sa_window = LayerWindow::Create(sa_layer, "simpleAdditionLayer", render_window);
+	// Create a window for ElevationLayer
+	std::shared_ptr<ElevationLayer> sa_layer = std::make_shared<ElevationLayer>(ElevationLayer(5));
+	//LayerWindow sa_window(sa_layer, "ElevationLayer", render_window);
+	auto sa_window = LayerWindow::Create(sa_layer, "ElevationLayer", render_window);
 
 	// Create a desktop and add the window to it.
 	sfg::Desktop desktop;
