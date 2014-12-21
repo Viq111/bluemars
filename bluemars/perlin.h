@@ -16,6 +16,7 @@ class BlueMars_EXPORT Noise
 public:
     Noise(long seed);
 	double outputValue(long x, long y, int octaves);
+  double outputValue(long x, long y);
 
 protected:
     long seed;

@@ -73,6 +73,8 @@ bluemars/perlin.h
 bluemars/perlin.cpp
 bluemars/simpleAdditionLayer.h
 bluemars/simpleAdditionLayer.cpp
+bluemars/elevationlayer.h
+bluemars/elevationlayer.cpp
 bluemars/windowsSpecific.h
 )
 
